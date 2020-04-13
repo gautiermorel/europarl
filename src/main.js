@@ -12,11 +12,13 @@ import App from '@/app.vue';
 import store from '@/store/store.js';
 import router from '@/router/router.js';
 import axios from 'axios';
-import VModal from 'vue-js-modal'
+import VModal from 'vue-js-modal';
+import NProgress from 'nprogress';
 
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import 'vue-toast-notification/dist/index.css';
 import '@/assets/global.scss';
+import 'nprogress/nprogress.css';
 
 Vue.config.productionTip = false
 
@@ -49,9 +51,16 @@ Vue.use({
 		// Interceptor that adds device and token to every request header
 		Vue.prototype.$publicApi.interceptors.request.use(function (config) {
 			config.headers['x-session-device'] = device;
+			NProgress.start()
 			return config;
 		}, function (err) {
 			return Promise.reject(err);
+		})
+
+		// before a response is returned stop nprogress
+		Vue.prototype.$publicApi.interceptors.response.use(response => {
+			NProgress.done()
+			return response
 		})
 	}
 })

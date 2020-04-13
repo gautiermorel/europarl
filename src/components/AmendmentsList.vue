@@ -4,6 +4,19 @@
     <br />
     <br />
 
+    <div v-if="!amendments" class="votes-list__loaders">
+      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
+      <br />
+      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
+      <br />
+      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
+      <br />
+      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
+      <br />
+      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
+      <br />
+    </div>
+
     <div v-bind:key="amendment.id" v-for="(amendment) in amendments">
       <div class="pretty p-default">
         <input
@@ -20,22 +33,24 @@
       <br />
       <br />
     </div>
-
-    <span>Selected: {{ checkedNames }}</span>
   </div>
 </template>
 
 <i18n>{}</i18n>
 
 <script>
+import { BulletListLoader } from "vue-content-loader";
+
 export default {
   name: "AmendmentsList",
-  components: {},
+  components: {
+    BulletListLoader
+  },
   props: {},
   data() {
     return {
       voteId: "",
-      amendments: [],
+      amendments: null,
       checkedNames: [] // https://lokesh-coder.github.io/pretty-checkbox/
     };
   },
@@ -67,4 +82,13 @@ export default {
 
 <style lang="scss" scoped="true">
 @import "~pretty-checkbox/src/pretty-checkbox.scss";
+.votes-list__loaders {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.votes-list__loader {
+  height: 100px;
+}
 </style>

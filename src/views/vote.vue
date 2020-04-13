@@ -1,7 +1,7 @@
 <template>
   <div class="vote">
     <amendments-list @forwaredFromAmendments="getCheckedNames($event)"></amendments-list>
-    <download-vote :checked-names="checkedNames"></download-vote>
+    <!-- <download-vote :checked-names="checkedNames"></download-vote> -->
   </div>
 </template>
 
