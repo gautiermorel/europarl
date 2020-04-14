@@ -1,39 +1,15 @@
 <template>
-  <div class="amendments-list">
-    <br />
-    <br />
-    <br />
-
-    <div v-if="!amendments" class="votes-list__loaders">
-      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
-      <br />
-      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
-      <br />
-      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
-      <br />
-      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
-      <br />
-      <bullet-list-loader class="votes-list__loader"></bullet-list-loader>
-      <br />
-    </div>
-
-    <div v-bind:key="amendment.id" v-for="(amendment) in amendments">
-      <div class="pretty p-default">
-        <input
-          type="checkbox"
-          :id="amendment.id"
-          :value="amendment.id"
-          v-model="checkedNames"
-          v-on:change="forwardToDownload(checkedNames)"
-        />
-        <div class="state">
-          <label :for="amendment.id">{{amendment.name}} ({{amendment.date}})</label>
-        </div>
-      </div>
-      <br />
-      <br />
-    </div>
-  </div>
+  <el-row type="flex" justify="center">
+    <el-card class="box-card amendments-list__card">
+      <el-table ref="multipleTable" :data="amendments" style="width: 100%" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column label="Amandement" width="220">
+          <template slot-scope="scope">{{ scope.row.date }}</template>
+        </el-table-column>
+        <el-table-column property="name" label="Name"></el-table-column>
+      </el-table>
+    </el-card>
+  </el-row>
 </template>
 
 <i18n>{}</i18n>
@@ -51,12 +27,19 @@ export default {
     return {
       voteId: "",
       amendments: null,
-      checkedNames: [] // https://lokesh-coder.github.io/pretty-checkbox/
+      selection: []
     };
   },
   methods: {
     forwardToDownload(checkedNames) {
       this.$emit("forwaredFromAmendments", checkedNames);
+    },
+    handleSelectionChange(amandements) {
+      console.log("amandement", amandements);
+      this.selection =
+        amandements && amandements.map(amandement => amandement.id);
+      console.log("this.selection", this.selection);
+      this.$emit("forwaredFromAmendments", this.selection);
     }
   },
   mounted: function() {
@@ -90,5 +73,9 @@ export default {
 }
 .votes-list__loader {
   height: 100px;
+}
+
+.amendments-list__card {
+  width: 75%;
 }
 </style>

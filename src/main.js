@@ -14,11 +14,14 @@ import router from '@/router/router.js';
 import axios from 'axios';
 import VModal from 'vue-js-modal';
 import NProgress from 'nprogress';
+import ElementUI from 'element-ui';
+
 
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import 'vue-toast-notification/dist/index.css';
 import '@/assets/global.scss';
 import 'nprogress/nprogress.css';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 
@@ -28,6 +31,7 @@ Vue.use(VueCarousel)
 Vue.use(VueToast)
 Vue.use(UUID)
 Vue.use(VueScrollTo)
+Vue.use(ElementUI)
 
 
 Vue.filter('formatDate', function (value) {

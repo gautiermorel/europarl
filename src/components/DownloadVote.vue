@@ -3,7 +3,7 @@
     <br />
     <br />
     <br />
-    <button v-on:click="download()">Download</button>
+    <el-button v-on:click="download()" type="primary">Export XLSX</el-button>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: "DownloadVote",
+  components: {},
   props: ["checked-names"],
   data() {
     return {

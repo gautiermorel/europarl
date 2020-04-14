@@ -1,15 +1,22 @@
 <template>
-  <div class="votes-list">
-    <div v-bind:key="vote.id" v-for="(vote) in votes">
-      <p>{{vote.date}}</p>
-      <p>@ {{vote.place}}</p>
-      <button v-on:click="viewVote(vote)">{{vote.name}}</button>
-      <br />
-    </div>
-    <div v-show="!votes" class="votes-list__loaders">
-      <content-loader v-bind:key="index" v-for="(loader, index) in loaders"></content-loader>
-    </div>
-  </div>
+  <el-row type="flex" justify="center">
+    <el-col type="flex" class="vote-list__content">
+      <el-card class="box-card vote-list__card" v-bind:key="vote.id" v-for="(vote, index) in votes">
+        <div slot="header" class="clearfix">
+          <span>
+            <b>{{ vote.date }}</b> |
+          </span>
+          <el-tag style="margin-left: 10px" size="medium">{{ vote.place }}</el-tag>
+
+          <el-badge v-show="index===0" style="float: right; margin-right:10px" value="new" class="item" type="warning">
+            <el-button size="small" @click="viewVote(vote)">details</el-button>
+          </el-badge>
+          <el-button v-show="index!==0" style="float: right; margin-right:10px" size="small" @click="viewVote(vote)">details</el-button>
+        </div>
+        <div>{{ vote.pdf }}</div>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <i18n>{}</i18n>
@@ -26,7 +33,6 @@ export default {
   data() {
     return {
       votes: null,
-      loaders: Array(5),
       checkedNames: []
     };
   },
@@ -54,5 +60,16 @@ export default {
 <style lang="scss" scoped="true">
 .votes-list__loaders {
   width: 400px;
+}
+
+.vote-list__content {
+  width: 50%;
+}
+
+.vote-list__card {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 </style>
