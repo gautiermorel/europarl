@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="center">
-    <el-col type="flex" class="vote-list__content">
-      <el-card class="box-card vote-list__card" v-bind:key="vote.id" v-for="(vote, index) in votes">
+    <el-col type="flex">
+      <el-card class="box-card vote-list__card" empty-text="Chargement..." v-bind:key="vote.id" v-for="(vote, index) in votes" @click.native="viewVote(vote)">
         <div slot="header" class="clearfix">
           <span>
             <b>{{ vote.date }}</b> |
@@ -58,18 +58,13 @@ export default {
 </script>
 
 <style lang="scss" scoped="true">
-.votes-list__loaders {
-  width: 400px;
-}
-
-.vote-list__content {
-  width: 50%;
-}
-
 .vote-list__card {
   margin-bottom: 20px;
   &:last-child {
     margin-bottom: 0;
   }
+}
+.vote-list__card {
+  cursor: pointer;
 }
 </style>

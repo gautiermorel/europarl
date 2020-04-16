@@ -1,5 +1,5 @@
 <template>
-  <div class="vote">
+  <div class="vote__content">
     <amendments-list @forwaredFromAmendments="getCheckedNames($event)"></amendments-list>
     <!-- <download-vote :checked-names="checkedNames"></download-vote> -->
   </div>
@@ -33,4 +33,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.vote__content {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+</style>

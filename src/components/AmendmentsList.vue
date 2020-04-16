@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="center">
-    <el-card class="box-card amendments-list__card">
-      <el-table ref="multipleTable" :data="amendments" style="width: 100%" @selection-change="handleSelectionChange">
+    <el-card class="box-card" style="width: 100%">
+      <el-table ref="multipleTable" :data="amendments" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="Amandement" width="220">
           <template slot-scope="scope">{{ scope.row.date }}</template>
@@ -65,17 +65,4 @@ export default {
 
 <style lang="scss" scoped="true">
 @import "~pretty-checkbox/src/pretty-checkbox.scss";
-.votes-list__loaders {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.votes-list__loader {
-  height: 100px;
-}
-
-.amendments-list__card {
-  width: 75%;
-}
 </style>

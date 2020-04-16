@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="vote__content">
     <votes-list></votes-list>
   </div>
 </template>
@@ -26,4 +26,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.vote__content {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+</style>

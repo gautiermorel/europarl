@@ -11,11 +11,22 @@ Vue.use(VueRouter)
 const routes = [{
 	path: '/',
 	name: 'votes',
-	component: Votes
+	component: Votes,
+	meta: {
+		breadcrumb: [
+			{ name: 'Accueil' }
+		]
+	}
 }, {
 	path: '/vote/:id',
 	name: 'vote',
-	component: Vote
+	component: Vote,
+	meta: {
+		breadcrumb: [
+			{ name: 'Accueil', path: '/' },
+			{ name: 'Vote' }
+		]
+	}
 }]
 
 const router = new VueRouter({ routes })

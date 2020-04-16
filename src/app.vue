@@ -7,8 +7,7 @@
         </el-row>
         <el-row>
           <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">Accueil</el-breadcrumb-item>
-            <el-breadcrumb-item>Details</el-breadcrumb-item>
+            <el-breadcrumb-item v-bind:key="index" v-for="(breadcrumb, index) in breadcrumbList" :to="{ path: breadcrumb.path }">{{breadcrumb.name}}</el-breadcrumb-item>
           </el-breadcrumb>
         </el-row>
       </el-header>
@@ -60,5 +59,16 @@
 }
 </style>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      breadcrumbList: this.$route.meta.breadcrumb
+    };
+  },
+  watch: {
+    $route(to, from) {
+      this.breadcrumbList = this.$route.meta.breadcrumb;
+    }
+  }
+};
 </script>
