@@ -21,15 +21,9 @@ export default {
   },
   methods: {
     download: function() {
-      if (this.$route && this.$route.params && this.$route.params.id)
-        this.voteId = this.$route.params.id;
+      if (this.$route && this.$route.params && this.$route.params.id) this.voteId = this.$route.params.id;
 
-      console.log(
-        "Downloading...",
-        this.checkedNames,
-        "this.voteId:",
-        this.voteId
-      );
+      console.log("Downloading...", this.checkedNames, "this.voteId:", this.voteId);
 
       this.$publicApi
         .get(`/votes/${this.voteId}/export`, {

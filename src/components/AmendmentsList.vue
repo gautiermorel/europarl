@@ -9,7 +9,7 @@
         <el-table-column property="name">
           <template slot="header">
             <el-row type="flex" justify="end">
-              <el-button type="success" icon="el-icon-download" :disabled="selection.length === 0" v-on:click="download()">Export XLSX</el-button>
+              <el-button type="success" icon="el-icon-download" :loading="isDownloading" :disabled="(selection.length === 0)" @click="download()">Export XLSX</el-button>
             </el-row>
           </template>
         </el-table-column>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       voteId: "",
+      isDownloading: false,
       amendments: null,
       selection: []
     };
@@ -45,12 +46,16 @@ export default {
       this.$emit("forwaredFromAmendments", this.selection);
     },
     download: function() {
-      if (this.$route && this.$route.params && this.$route.params.id) this.voteId = this.$route.params.id;
+      if (this.$route && this.$route.params && this.$route.params.id) {
+        this.voteId = this.$route.params.id;
+      }
+
+      this.isDownloading = true;
 
       this.$publicApi
         .get(`/votes/${this.voteId}/export`, {
           params: {
-            amendmentIds: this.checkedNames
+            amendmentIds: this.selection
           },
           responseType: "arraybuffer"
         })
@@ -63,10 +68,13 @@ export default {
           document.body.appendChild(fileLink);
 
           fileLink.click();
+          this.$notify({ title: "Success", message: "Votre fichier peut être téléchargé", type: "success" });
+          this.isDownloading = false;
         })
         .catch(err => {
-          console.log('ERROR: AmendmentsList.vue#function - Error while downloading:', res);
-          this.$message.error('Oops, this is a error message.');
+          console.log("ERROR: AmendmentsList.vue#function - Error while downloading:", err);
+          this.isDownloading = false;
+          this.$message.error("Oops, this is a error message.");
         });
     }
   },
