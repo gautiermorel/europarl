@@ -5,25 +5,24 @@
         <el-row>
           <h1>EUROPARL</h1>
           <el-col class="app__tagline" type="flex" align="start">
-            <div>Résultats des votes et résultats des votes par appel nominal des périodes de session des derniers mois.</div>
-            <div>Ce site vous permet d'exporter ces informations en fichier excel (.xlsx).</div>
+            <el-alert title="Résultats des votes et résultats des votes par appel nominal des périodes de session des derniers mois." type="info" :closable="false"></el-alert>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row type="flex" justify="start">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item v-bind:key="index" v-for="(breadcrumb, index) in breadcrumbList" :to="{ path: breadcrumb.path }">{{breadcrumb.name}}</el-breadcrumb-item>
           </el-breadcrumb>
-        </el-row>
+        </el-row>-->
       </el-header>
       <transition name="fade">
         <router-view></router-view>
       </transition>
       <el-footer>
         <el-row type="flex" justify="center" class="app__footer">
-          <div>
-            © europal.eu.org - 2020 &nbsp; - with ♥ by
-            <a href="https://gautiermorel.com" target="_blank">Gautier</a>
-          </div>
+          <el-link href="https://gautiermorel.com" target="_blank">
+            © europal.eu.org - 2020 &nbsp; - with
+            <i class="el-icon-magic-stick"></i> by Gautier
+          </el-link>
         </el-row>
       </el-footer>
     </el-container>

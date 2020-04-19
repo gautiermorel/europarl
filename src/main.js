@@ -4,13 +4,15 @@ import VueI18n from 'vue-i18n';
 import VueCarousel from 'vue-carousel';
 import VueToast from 'vue-toast-notification';
 import UUID from 'vue-uuid';
-import { uuid } from 'vue-uuid';
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import VueScrollTo from 'vue-scrollto';
+import locale from 'element-ui/lib/locale/lang/fr';
+import { uuid } from 'vue-uuid';
 
 import App from '@/app.vue';
 import store from '@/store/store.js';
 import router from '@/router/router.js';
+
 import axios from 'axios';
 import VModal from 'vue-js-modal';
 import NProgress from 'nprogress';
@@ -31,8 +33,7 @@ Vue.use(VueCarousel)
 Vue.use(VueToast)
 Vue.use(UUID)
 Vue.use(VueScrollTo)
-Vue.use(ElementUI)
-
+Vue.use(ElementUI, { locale })
 
 Vue.filter('formatDate', function (value) {
 	if (value) {

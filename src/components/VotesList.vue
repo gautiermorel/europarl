@@ -1,12 +1,21 @@
 <template>
   <el-row type="flex" justify="center">
     <el-col type="flex">
+      <el-row type="flex" justify="start">
+        <el-date-picker v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions"></el-date-picker>
+        <el-button type="primary" icon="el-icon-search" @click="getVotes()">Rechercher</el-button>
+      </el-row>
+
       <el-row class="votes-list_pagination" type="flex" justify="center">
-        <el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :size="10" @current-change="getNewPage"></el-pagination>
+        <el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
       </el-row>
 
       <div v-if="!votes" style="margin-top: 20px">
         <content-loader v-for="o in 4" :key="o"></content-loader>
+      </div>
+
+      <div v-if="votes && votes.length === 0" style="padding: 20px">
+        <el-alert title="Pas de votes à ce jour" type="info" :closable="false"></el-alert>
       </div>
 
       <div v-if="votes && votes.length > 0">
@@ -19,26 +28,26 @@
           <div class="text item">
             <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="vote.amendments" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="55"></el-table-column>
-              <el-table-column property="title" label="Amendements" min-width="800">
+              <el-table-column property="title" label="Amendements" min-width="500">
                 <template slot="header">
                   <el-row type="flex" justify="center">Amendements</el-row>
                 </template>
               </el-table-column>
-              <el-table-column label="Votes" width="200">
+              <el-table-column label="Votes" width="250">
                 <template slot="header">
                   <el-row type="flex" justify="center">Votes</el-row>
                 </template>
                 <template slot-scope="scope">
-                  <el-row type="flex" justify="center">
-                    <el-tag style="margin-right: 20px" v-if="scope.row.votes && scope.row.votes['+']" type="success">
+                  <el-row type="flex" justify="space-between">
+                    <el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['+']" type="success">
                       <i class="el-icon-document-checked"></i>
                       {{scope.row.votes && scope.row.votes['+'] && scope.row.votes['+'].total}}
                     </el-tag>
-                    <el-tag style="margin-right: 20px" v-if="scope.row.votes && scope.row.votes['0']" type="warning">
+                    <el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['0']" type="warning">
                       <i class="el-icon-document-delete"></i>
                       {{scope.row.votes && scope.row.votes['0'] && scope.row.votes['0'].total}}
                     </el-tag>
-                    <el-tag v-if="scope.row.votes && scope.row.votes['-']" type="danger">
+                    <el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['-']" type="danger">
                       <i class="el-icon-document-remove"></i>
                       {{scope.row.votes && scope.row.votes['-'] && scope.row.votes['-'].total}}
                     </el-tag>
@@ -51,7 +60,7 @@
       </div>
 
       <el-row class="votes-list_pagination" type="flex" justify="center">
-        <el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :size="10" @current-change="getNewPage"></el-pagination>
+        <el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :page-size="10" @current-change="getNewPage"></el-pagination>
       </el-row>
     </el-col>
   </el-row>
@@ -74,7 +83,13 @@ export default {
       total: 0,
       page: 1,
       selectedAmendments: [],
-      isDownloading: false
+      isDownloading: false,
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        }
+      },
+      searchDate: ""
     };
   },
   methods: {
@@ -136,13 +151,14 @@ export default {
       this.$publicApi
         .get("/votes", {
           params: {
-            page: this.page
+            page: this.page,
+            searchDate: this.searchDate
           }
         })
         .then(res => {
           let { votes, total } = (res && res.data) || {};
           this.votes = votes || [];
-          this.total = total || [];
+          this.total = total || 0;
         })
         .catch(err => {
           console.log("ERROR: votesList.vue#mounted - Error while getting votes:", err);
@@ -176,7 +192,6 @@ export default {
 
 .item {
   margin-bottom: 18px;
-  padding-right: 60px;
 }
 
 .clearfix:before,
