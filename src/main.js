@@ -37,7 +37,13 @@ Vue.use(ElementUI)
 Vue.filter('formatDate', function (value) {
 	if (value) {
 		let language = 'fr';
-		return moment(value).locale(language).format('dddd DD MMMM')
+		return moment(value).locale(language).format('DD MMMM YYYY')
+	}
+})
+Vue.filter('formatHours', function (value) {
+	if (value) {
+		let language = 'fr';
+		return moment(value).locale(language).format('HH:mm')
 	}
 })
 

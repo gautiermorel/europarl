@@ -17,17 +17,19 @@ const routes = [{
 			{ name: 'Accueil' }
 		]
 	}
-}, {
-	path: '/vote/:id',
-	name: 'vote',
-	component: Vote,
-	meta: {
-		breadcrumb: [
-			{ name: 'Accueil', path: '/' },
-			{ name: 'Vote' }
-		]
-	}
-}]
+},
+	// {
+	// 	path: '/vote/:id',
+	// 	name: 'vote',
+	// 	component: Vote,
+	// 	meta: {
+	// 		breadcrumb: [
+	// 			{ name: 'Accueil', path: '/' },
+	// 			{ name: 'Vote' }
+	// 		]
+	// 	}
+	// }
+]
 
 const router = new VueRouter({ routes })
 
