@@ -6,7 +6,7 @@
           <h1>EUROPARL</h1>
           <el-col class="app__tagline" type="flex" align="start">
             <div>Résultats des votes et résultats des votes par appel nominal des périodes de session des derniers mois.</div>
-            <div>Ce site vous permets d'exporter ces informations en fichier excel (.xlsx).</div>
+            <div>Ce site vous permet d'exporter ces informations en fichier excel (.xlsx).</div>
           </el-col>
         </el-row>
         <el-row>
