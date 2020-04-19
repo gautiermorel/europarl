@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Votes from '@/views/votes.vue';
-import Vote from '@/views/vote.vue';
 import NProgress from 'nprogress';
 
 import 'nprogress/nprogress.css';
@@ -17,19 +16,7 @@ const routes = [{
 			{ name: 'Accueil' }
 		]
 	}
-},
-	// {
-	// 	path: '/vote/:id',
-	// 	name: 'vote',
-	// 	component: Vote,
-	// 	meta: {
-	// 		breadcrumb: [
-	// 			{ name: 'Accueil', path: '/' },
-	// 			{ name: 'Vote' }
-	// 		]
-	// 	}
-	// }
-]
+}]
 
 const router = new VueRouter({ routes })
 
