@@ -5,7 +5,7 @@
         <el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :size="10" @current-change="getNewPage"></el-pagination>
       </el-row>
 
-      <div v-if="!votes">
+      <div v-if="!votes" style="margin-top: 20px">
         <content-loader v-for="o in 4" :key="o"></content-loader>
       </div>
 
@@ -19,7 +19,7 @@
           <div class="text item">
             <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="vote.amendments" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="55"></el-table-column>
-              <el-table-column property="title" label="Amendements">
+              <el-table-column property="title" label="Amendements" min-width="800">
                 <template slot="header">
                   <el-row type="flex" justify="center">Amendements</el-row>
                 </template>
