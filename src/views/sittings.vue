@@ -1,23 +1,23 @@
 <template>
-  <div class="vote__content">
-    <votes-list></votes-list>
+  <div class="sitting__content">
+    <sittings-list></sittings-list>
   </div>
 </template>
 
 <i18n>{}</i18n>
 
 <script>
-import VotesList from "@/components/VotesList.vue";
+import SittingsList from "@/components/SittingsList.vue";
 
 export default {
   name: "home",
   components: {
-    VotesList
+    SittingsList
   },
   props: {},
   data() {
     return {
-      votes: null
+      sittings: null
     };
   },
   methods: {},
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.vote__content {
+.sitting__content {
   padding-left: 20px;
   padding-right: 20px;
 }

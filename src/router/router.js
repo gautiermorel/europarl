@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Votes from '@/views/votes.vue';
+import Sittings from '@/views/sittings.vue';
 import NProgress from 'nprogress';
 
 import 'nprogress/nprogress.css';
@@ -9,8 +9,8 @@ Vue.use(VueRouter)
 
 const routes = [{
 	path: '/',
-	name: 'votes',
-	component: Votes,
+	name: 'sittings',
+	component: Sittings,
 	meta: {
 		breadcrumb: [
 			{ name: 'Accueil' }
