@@ -27,8 +27,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sitting__content {
-	padding-left: 20px;
-	padding-right: 20px;
-}
 </style>

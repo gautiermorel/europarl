@@ -1,21 +1,29 @@
 <template>
 	<div id="app">
+		<el-row type="flex" justify="space-between" align="center" class="app__top-header">
+			<el-dropdown>
+				<span class="el-dropdown-link">
+					FR - Français
+					<i class="el-icon-arrow-down el-icon--right"></i>
+				</span>
+				<el-dropdown-menu slot="dropdown">
+					<el-dropdown-item disabled>EN - English</el-dropdown-item>
+				</el-dropdown-menu>
+			</el-dropdown>
+			<el-row type="flex">
+				<el-alert :title="displayLastUpdate" type="info" :closable="false"></el-alert>
+			</el-row>
+		</el-row>
 		<el-container>
-			<el-header height="160px">
-				<el-row>
-					<h1>EUROPARL</h1>
-					<el-row type="flex">
-						<el-alert :title="displayLastUpdate" type="info" :closable="false"></el-alert>
-					</el-row>
-					<el-col class="app__tagline" type="flex" align="start">
-						<el-alert title="Résultats des votes et résultats des votes par appel nominal des périodes de session des derniers mois." type="info" :closable="false"></el-alert>
+			<el-header class="app__header" height="120px">
+				<el-row class="app__header-content" type="flex">
+					<el-image style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
+					<el-divider direction="vertical"></el-divider>
+					<el-col type="flex">
+						<div class="app__title">Europarl</div>
+						<div>Résultats des votes des séances plénières européenes</div>
 					</el-col>
 				</el-row>
-				<!-- <el-row type="flex" justify="start">
-          <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item v-bind:key="index" v-for="(breadcrumb, index) in breadcrumbList" :to="{ path: breadcrumb.path }">{{breadcrumb.name}}</el-breadcrumb-item>
-          </el-breadcrumb>
-				</el-row>-->
 			</el-header>
 			<transition name="fade">
 				<router-view></router-view>
@@ -36,6 +44,10 @@
 * {
 	text-align: start;
 	font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+body {
+	margin: 0px;
 }
 
 #app {
@@ -73,9 +85,33 @@
 	padding-top: 10px;
 	padding-bottom: 50px;
 }
+.app__title {
+	font-family: Georgia, Garamond, serif, Palatino;
+	font-size: 30px;
+	font-weight: 400;
+}
+
+.app__top-header {
+	background-color: #fafafa;
+	height: 40px;
+	padding: 10px;
+	border-bottom: 1px solid #d1d3d4;
+}
+.app__header {
+	border-bottom: 1px solid #d1d3d4;
+}
+
+.app__header-content {
+	padding-top: 30px;
+	padding-bottom: 30px;
+
+	.el-divider {
+		height: 50px;
+	}
+}
 </style>
 <script>
-import moment from 'moment';
+import moment from "moment";
 export default {
 	data() {
 		return {
@@ -96,7 +132,9 @@ export default {
 	},
 	computed: {
 		displayLastUpdate: function() {
-			let lastUpdate = moment(this.lastUpdate).locale('fr').format('DD MMMM YYYY HH:mm:ss');
+			let lastUpdate = moment(this.lastUpdate)
+				.locale("fr")
+				.format("DD MMMM YYYY HH:mm:ss");
 			return `Dernière mise à jour: ${lastUpdate}`;
 		}
 	},

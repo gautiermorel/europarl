@@ -1,12 +1,14 @@
 <template>
 	<el-row type="flex" justify="center">
 		<el-col type="flex">
-			<el-row type="flex" justify="start">
-				<el-date-picker v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions"></el-date-picker>
-				<el-button type="primary" icon="el-icon-search" @click="getSittings()">Rechercher</el-button>
+			<el-row class="sittings-list__search-bar" type="flex" justify="center" align="center">
+				<div class="sittings-list__search-bar-container">
+					<el-date-picker popper-class="yesytet" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions"></el-date-picker>
+					<el-button type="primary" icon="el-icon-search" @click="getSittings()">Rechercher</el-button>
+				</div>
 			</el-row>
 
-			<el-row class="sittings-list_pagination" type="flex" justify="center">
+			<el-row class="sittings-list__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
 			</el-row>
 
@@ -18,15 +20,16 @@
 				<el-alert title="Pas de sittings à ce jour" type="info" :closable="false"></el-alert>
 			</div>
 
-			<div v-if="sittings && sittings.length > 0">
+			<div class="sittings-list__cards" v-if="sittings && sittings.length > 0">
 				<el-card class="box-card" empty-text="Chargement..." v-bind:key="sitting._id" v-for="(sitting) in sittings">
 					<div slot="header" class="clearfix">
 						<i class="el-icon-date"></i>
-						<span style="padding-left: 20px">{{sitting.ts | formatDate }} [{{sitting.votes.length}} textes]</span>
+						<span style="padding-left: 20px">Séance plénière du {{sitting.ts | formatDate }} - {{sitting.votes.length}} textes disponibles</span>
 						<el-button style="float: right" type="success" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
 					</div>
 					<div class="text item">
-						<el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
+						<!-- <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange"> -->
+						<el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
 							<el-table-column type="selection" width="55"></el-table-column>
 							<el-table-column property="title" label="Texts" min-width="500">
 								<template slot="header">
@@ -209,7 +212,39 @@ export default {
 	margin-bottom: 20px;
 }
 
-.sittings-list_pagination {
+.sittings-list__pagination {
 	padding: 20px;
+}
+
+.sittings-list__search-bar {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #fafafa;
+	border-bottom: 1px solid #d1d3d4;
+
+	.sittings-list__search-bar-container {
+		border: 1px solid #d1d3d4;
+		border-radius: 4px;
+	}
+
+	.el-button {
+		border-radius: 0px;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+}
+.sittings-list__cards {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+</style>
+<style lang="scss">
+.sittings-list__search-bar {
+	input.el-input__inner {
+		border: 0px;
+		border-radius: 0px;
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
 }
 </style>
