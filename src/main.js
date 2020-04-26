@@ -23,6 +23,7 @@ import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import 'vue-toast-notification/dist/index.css';
 import 'nprogress/nprogress.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css';
 
 Vue.config.productionTip = false
 

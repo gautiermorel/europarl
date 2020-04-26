@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<el-row type="flex" justify="space-between" align="center" class="app__top-header">
-			<el-dropdown>
+			<el-dropdown class="hidden-xs-only">
 				<span class="el-dropdown-link">
 					FR - Français
 					<i class="el-icon-arrow-down el-icon--right"></i>
@@ -21,7 +21,7 @@
 					<el-divider direction="vertical"></el-divider>
 					<el-col type="flex">
 						<div class="app__title">Europarl</div>
-						<div>Résultats des votes des séances plénières européenes</div>
+						<div class="hidden-xs-only">Résultats des votes des séances plénières européenes</div>
 						<el-row type="flex" justify="start" align="center" class="app__disclamer">
 							<i style="margin-right: 3px; margin-top: 1px" class="el-icon-warning-outline"></i>
 							<span>Avertissement - Ce site est un projet personnel citoyen. Il n'est lié à aucune institution.</span>

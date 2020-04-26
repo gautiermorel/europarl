@@ -2,7 +2,7 @@
 	<el-row type="flex" justify="center">
 		<el-col type="flex">
 			<el-row class="sittings-list__search-bar" type="flex" justify="center" align="center">
-				<div class="sittings-list__search-bar-container">
+				<div class="sittings-list__search-bar-container hidden-xs-only">
 					<el-date-picker popper-class="yesytet" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions"></el-date-picker>
 					<el-button type="primary" icon="el-icon-search" @click="getSittings()">Rechercher</el-button>
 				</div>
@@ -12,7 +12,7 @@
 				<el-pagination :hide-on-single-page="true" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
 			</el-row>
 
-			<div v-if="!sittings" style="margin-top: 20px">
+			<div v-if="!sittings" style="padding: 20px">
 				<content-loader v-for="o in 4" :key="o"></content-loader>
 			</div>
 
