@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Sittings from '@/views/sittings.vue';
 import NProgress from 'nprogress';
+
+import Sittings from '@/views/sittings.vue';
+import Compare from '@/views/compare.vue';
 
 import 'nprogress/nprogress.css';
 
@@ -13,7 +15,17 @@ const routes = [{
 	component: Sittings,
 	meta: {
 		breadcrumb: [
-			{ name: 'Accueil' }
+			{ name: 'Séance plénières' }
+		]
+	}
+}, {
+	path: '/compare',
+	name: 'compare',
+	component: Compare,
+	meta: {
+		breadcrumb: [
+			{ name: 'Séance plénières' },
+			{ name: 'Compare' }
 		]
 	}
 }]
