@@ -17,10 +17,10 @@
 		<el-container>
 			<el-header class="app__header" height="120px">
 				<el-row class="app__header-content" type="flex">
-					<el-image style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
+					<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
 					<el-divider direction="vertical"></el-divider>
 					<el-col type="flex">
-						<div class="app__title">Europarl</div>
+						<div class="app__title" @click="navigate('/')">Europarl</div>
 						<div class="hidden-xs-only">Résultats des votes des séances plénières européenes</div>
 						<el-row type="flex" justify="start" align="center" class="app__disclamer">
 							<i style="margin-right: 3px; margin-top: 1px" class="el-icon-warning-outline"></i>
@@ -90,6 +90,7 @@ body {
 	padding-bottom: 50px;
 }
 .app__title {
+	cursor: pointer;
 	font-family: Georgia, Garamond, serif, Palatino;
 	font-size: 30px;
 	font-weight: 400;
@@ -114,8 +115,11 @@ body {
 	}
 }
 .app__disclamer {
-	color: #F56C6C;
+	color: #f56c6c;
 	font-size: 10px;
+}
+.app__header-image {
+	cursor: pointer;
 }
 </style>
 <script>
@@ -126,6 +130,11 @@ export default {
 			breadcrumbList: this.$route.meta.breadcrumb,
 			lastUpdate: ""
 		};
+	},
+	methods: {
+		navigate(page) {
+			if (this.$route.path !== page) this.$router.push(page);
+		}
 	},
 	mounted: function() {
 		this.$publicApi

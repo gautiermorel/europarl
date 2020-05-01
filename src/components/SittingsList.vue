@@ -1,11 +1,13 @@
 <template>
 	<el-row type="flex" justify="center">
 		<el-col type="flex">
-			<el-row class="sittings-list__search-bar" type="flex" justify="center" align="center">
+			<el-row class="sittings-list__search-bar" type="flex" justify="space-around" align="center">
 				<div class="sittings-list__search-bar-container hidden-xs-only">
-					<el-date-picker popper-class="yesytet" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions"></el-date-picker>
-					<el-button type="primary" icon="el-icon-search" @click="getSittings()">Rechercher</el-button>
+					<el-date-picker v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
 				</div>
+				<el-badge value="new" class="item">
+					<el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button>
+				</el-badge>
 			</el-row>
 
 			<el-row class="sittings-list__pagination" type="flex" justify="center">
@@ -99,7 +101,7 @@ export default {
 		handleSelectionChange(votes) {
 			this.selectedVotes = votes && votes.map(vote => vote._id);
 		},
-		download: function(sittingId) {
+		download(sittingId) {
 			let confirmMessage =
 				this.selectedVotes.length === 0
 					? this.$confirm("Vous n'avez selectionné aucun texte, êtes-vous sûr de vouloir continuer ?", "Attention", {
@@ -167,6 +169,9 @@ export default {
 				.catch(err => {
 					console.log("ERROR: sittingsList.vue#mounted - Error while getting sittings:", err);
 				});
+		},
+		navigate(page) {
+			this.$router.push("/compare");
 		}
 	},
 	mounted: function() {
@@ -221,30 +226,9 @@ export default {
 	padding-bottom: 20px;
 	background-color: #fafafa;
 	border-bottom: 1px solid #d1d3d4;
-
-	.sittings-list__search-bar-container {
-		border: 1px solid #d1d3d4;
-		border-radius: 4px;
-	}
-
-	.el-button {
-		border-radius: 0px;
-		border-top-right-radius: 3px;
-		border-bottom-right-radius: 3px;
-	}
 }
 .sittings-list__cards {
 	padding-left: 20px;
 	padding-right: 20px;
-}
-</style>
-<style lang="scss">
-.sittings-list__search-bar {
-	input.el-input__inner {
-		border: 0px;
-		border-radius: 0px;
-		border-top-left-radius: 3px;
-		border-bottom-left-radius: 3px;
-	}
 }
 </style>
