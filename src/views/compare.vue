@@ -51,16 +51,6 @@ export default {
 	name: "Compare",
 	components: {},
 	props: {},
-	data: function() {
-		return {
-			votes: [],
-			options: [],
-			value: [],
-			loading: false,
-			states: [],
-			search: null
-		};
-	},
 	computed: {
 		meps: function() {
 			let [vote = {}] = this.votes || [];
@@ -103,7 +93,10 @@ export default {
 		},
 		refresh: function() {
 			this.$router.replace({ name: "compare", query: { mepids: this.value, search: this.search } });
-			this.$refs.select.blur();
+
+			setTimeout(() => {
+				this.$refs.select.blur();
+			}, 300);
 
 			this.options = [];
 
@@ -124,7 +117,17 @@ export default {
 				});
 		}
 	},
-	mounted: function() {
+	data() {
+		return {
+			votes: [],
+			options: [],
+			value: [],
+			loading: false,
+			states: [],
+			search: null
+		};
+	},
+	mounted() {
 		let mepids = this.$route.query.mepids;
 		mepids = (mepids && ((Array.isArray(mepids) && mepids) || [mepids])) || null;
 

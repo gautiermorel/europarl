@@ -11,10 +11,20 @@ Vue.use(VueRouter)
 
 const routes = [{
 	path: '/',
+	name: 'home',
+	component: Sittings,
+	meta: {
+		breadcrumb: [
+			{ name: 'Accueil' }
+		]
+	}
+}, {
+	path: '/sittings',
 	name: 'sittings',
 	component: Sittings,
 	meta: {
 		breadcrumb: [
+			{ name: 'Accueil', path: '/' },
 			{ name: 'Séance plénières' }
 		]
 	}
@@ -24,7 +34,7 @@ const routes = [{
 	component: Compare,
 	meta: {
 		breadcrumb: [
-			{ name: 'Séance plénières' },
+			{ name: 'Acceuil', path: '/' },
 			{ name: 'Compare' }
 		]
 	}
