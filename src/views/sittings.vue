@@ -3,7 +3,7 @@
 		<el-col type="flex">
 			<el-row class="sittings__search-bar" type="flex" justify="space-around" align="center">
 				<div class="sittings__search-bar-container hidden-xs-only">
-					<el-date-picker v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
+					<el-date-picker ref="datePicker" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
 				</div>
 				<el-badge value="new" class="item">
 					<el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button>
@@ -71,6 +71,7 @@
 <script>
 import SittingLoader from "@/components/sitting-loader.vue";
 import moment from "moment";
+import _ from "lodash";
 
 export default {
 	name: "Sittings",
@@ -86,10 +87,10 @@ export default {
 			let confirmMessage =
 				this.selectedVotes.length === 0
 					? this.$confirm("Vous n'avez selectionné aucun texte, êtes-vous sûr de vouloir continuer ?", "Attention", {
-							confirmButtonText: "OK",
-							cancelButtonText: "Annuler",
-							type: "warning"
-					  })
+						confirmButtonText: "OK",
+						cancelButtonText: "Annuler",
+						type: "warning"
+					})
 					: Promise.resolve();
 
 			confirmMessage
@@ -122,7 +123,7 @@ export default {
 							this.$message.error("Oops, this is a error message.");
 						});
 				})
-				.catch(() => {});
+				.catch(() => { });
 		},
 		changeHead({ row, column, rowIndex, columnIndex }) {
 			return { color: "#2b3e4f", width: "100%" };
@@ -134,6 +135,26 @@ export default {
 			this.page = page;
 			return this.getSittings();
 		},
+		refreshSittingsDates: _.debounce(function (options) {
+			let { startDate, endDate } = options || {};
+
+			let [firstSitting] = this.sittingsDates || [];
+
+			if (moment(firstSitting).isSameOrAfter(startDate) && moment(firstSitting).isSameOrBefore(endDate)) return true;
+			else {
+				this.$publicApi.get("/sittings", { params: { startDate, endDate } })
+					.then(res => {
+						let { sittings, total } = (res && res.data) || {};
+						this.sittingsDates = (sittings && sittings.map(s => s.ts)) || [];
+					})
+					.catch(err => {
+						console.log("ERROR: sittingsList.vue#getSittingDates - Error while getting sitting dates:", err);
+					});
+				return false;
+			}
+
+			return false;
+		}, 200),
 		getSittings() {
 			this.$publicApi
 				.get("/sittings", {
@@ -156,8 +177,14 @@ export default {
 		}
 	},
 	data() {
+		let startDate = moment().subtract(1, "month");
+		let endDate = moment();
+
+		let self = this;
+
 		return {
 			sittings: null,
+			sittingsDates: [],
 			total: 0,
 			page: 1,
 			selectedVotes: [],
@@ -167,7 +194,9 @@ export default {
 					return time.getTime() > Date.now();
 				},
 				cellClassName(time) {
-					if (moment(time).isSame(moment("2020-04-16"))) return "has-sitting";
+					self.refreshSittingsDates({ startDate: moment(time).subtract(42, "days").toDate(), endDate: moment(time).toDate() });
+					let sittingsDates = self.sittingsDates;
+					if (sittingsDates.some(s => moment(s).startOf("day").isSame(moment(time)))) return "has-sitting"
 					return "no-sitting";
 				}
 			},
@@ -183,6 +212,8 @@ export default {
 			})
 			.then(res => {
 				let { sittings, total, page = 1 } = (res && res.data) || {};
+
+				this.sittingsDates = sittings.map(s => s.ts);
 
 				this.sittings = sittings || [];
 				this.total = total || [];
@@ -230,5 +261,16 @@ export default {
 .sittings__cards {
 	padding-left: 20px;
 	padding-right: 20px;
+}
+</style>
+
+<style lang="scss">
+.has-sitting {
+	color: #67c23a;
+	font-weight: 700;
+}
+
+.no-sitting {
+	border-radius: 50%;
 }
 </style>
