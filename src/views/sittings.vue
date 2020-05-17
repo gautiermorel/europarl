@@ -33,6 +33,9 @@
 								<template slot="header">
 									<el-row type="flex" justify="center">Textes</el-row>
 								</template>
+								<template slot-scope="scope">
+									<div v-html="$options.filters.getReferences(scope.row.title)"></div>
+								</template>
 							</el-table-column>
 							<el-table-column width="250">
 								<template slot="header">
