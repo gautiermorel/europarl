@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 
 import Sittings from '@/views/sittings.vue';
 import Compare from '@/views/compare.vue';
+import Privacy from '@/views/privacy.vue';
 
 import 'nprogress/nprogress.css';
 
@@ -36,6 +37,16 @@ const routes = [{
 		breadcrumb: [
 			{ name: 'Acceuil', path: '/' },
 			{ name: 'Compare' }
+		]
+	}
+}, {
+	path: '/privacy',
+	name: 'privacy',
+	component: Privacy,
+	meta: {
+		breadcrumb: [
+			{ name: 'Acceuil', path: '/' },
+			{ name: 'Privacy' }
 		]
 	}
 }]

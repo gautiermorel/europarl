@@ -5,9 +5,7 @@
 				<div class="sittings__search-bar-container hidden-xs-only">
 					<el-date-picker ref="datePicker" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
 				</div>
-				<el-badge value="new" class="item">
-					<el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button>
-				</el-badge>
+				<el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button>
 			</el-row>
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" :current-page="page" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>

@@ -33,11 +33,25 @@
 				<router-view></router-view>
 			</transition>
 			<el-footer>
-				<el-row type="flex" justify="center" class="app__footer">
-					<el-link href="https://gautiermorel.com" target="_blank">
-						© europal.eu.org - 2020 &nbsp; - with
-						<i class="el-icon-magic-stick"></i> by Gautier
-					</el-link>
+				<el-row type="flex" align="center"  justify="center" class="app__footer">
+					<el-col type="flex" justify="center" align="center">
+						<div>
+							<el-link href="https://gautiermorel.com" target="_blank">
+								© europal.eu.org - 2020 &nbsp; - with
+								<i class="el-icon-magic-stick"></i> by Gautier
+							</el-link>
+						</div>
+						<div>
+							<el-link href="https://parltrack.org" target="_blank">© Parltrack, 2020</el-link>
+						</div>
+
+						<div>
+							<el-link href="https://www.europarl.europa.eu/privacy-policy/fr" target="_blank">© European Union, 2020 – Source: European Parliament</el-link>
+						</div>
+						<div>
+							<el-button type="text" icon="el-icon-info" @click="navigate('privacy')">Politique de confidentialité</el-button>
+						</div>
+					</el-col>
 				</el-row>
 			</el-footer>
 		</el-container>
@@ -121,6 +135,9 @@ body {
 .app__header-image {
 	cursor: pointer;
 }
+.app__footer {
+	width: 100%;
+}
 </style>
 <script>
 import moment from "moment";
@@ -136,7 +153,7 @@ export default {
 			if (this.$route.path !== page) this.$router.push(page);
 		}
 	},
-	mounted: function() {
+	mounted: function () {
 		this.$publicApi
 			.get("/logs")
 			.then(res => {
@@ -148,7 +165,7 @@ export default {
 			});
 	},
 	computed: {
-		displayLastUpdate: function() {
+		displayLastUpdate: function () {
 			let lastUpdate = moment(this.lastUpdate)
 				.locale("fr")
 				.format("DD MMMM YYYY HH:mm:ss");
