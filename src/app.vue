@@ -14,47 +14,49 @@
 				<el-alert :title="displayLastUpdate" type="info" :closable="false"></el-alert>
 			</el-row>
 		</el-row>
-		<el-container>
-			<el-header class="app__header" height="120px">
-				<el-row class="app__header-content" type="flex">
-					<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
-					<el-divider direction="vertical"></el-divider>
-					<el-col type="flex">
-						<div class="app__title" @click="navigate('/')">Europarl</div>
-						<div class="hidden-xs-only">Résultats des votes des séances plénières européenes</div>
-						<el-row type="flex" justify="start" align="center" class="app__disclamer">
-							<i style="margin-right: 3px; margin-top: 1px" class="el-icon-warning-outline"></i>
-							<span>Avertissement - Ce site est un projet personnel citoyen. Il n'est lié à aucune institution.</span>
-						</el-row>
-					</el-col>
-				</el-row>
-			</el-header>
-			<transition name="fade">
-				<router-view></router-view>
-			</transition>
-			<el-footer>
-				<el-row type="flex" align="center"  justify="center" class="app__footer">
-					<el-col type="flex" justify="center" align="center">
-						<div>
-							<el-link href="https://gautiermorel.com" target="_blank">
-								© europal.eu.org - 2020 &nbsp; - with
-								<i class="el-icon-magic-stick"></i> by Gautier
-							</el-link>
-						</div>
-						<div>
-							<el-link href="https://parltrack.org" target="_blank">© Parltrack, 2020</el-link>
-						</div>
+		<el-row type="flex" justify="center" align="center">
+			<el-container class="app__container">
+				<el-header class="app__header" height="120px">
+					<el-row class="app__header-content" type="flex">
+						<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
+						<el-divider direction="vertical"></el-divider>
+						<el-col type="flex">
+							<div class="app__title" @click="navigate('/')">Europarl</div>
+							<div class="hidden-xs-only">Résultats des votes des séances plénières européenes</div>
+							<el-row type="flex" justify="start" align="center" class="app__disclamer">
+								<i style="margin-right: 3px; margin-top: 1px" class="el-icon-warning-outline"></i>
+								<span>Avertissement - Ce site est un projet personnel citoyen. Il n'est lié à aucune institution.</span>
+							</el-row>
+						</el-col>
+					</el-row>
+				</el-header>
+				<transition name="fade">
+					<router-view></router-view>
+				</transition>
+				<el-footer>
+					<el-row type="flex" align="center" justify="center" class="app__footer">
+						<el-col type="flex" justify="center" align="center">
+							<div>
+								<el-link href="https://gautiermorel.com" target="_blank">
+									© europal.eu.org - 2020 &nbsp; - with
+									<i class="el-icon-magic-stick"></i> by Gautier
+								</el-link>
+							</div>
+							<div>
+								<el-link href="https://parltrack.org" target="_blank">© Parltrack, 2020</el-link>
+							</div>
 
-						<div>
-							<el-link href="https://www.europarl.europa.eu/privacy-policy/fr" target="_blank">© European Union, 2020 – Source: European Parliament</el-link>
-						</div>
-						<div>
-							<el-button type="text" icon="el-icon-info" @click="navigate('privacy')">Politique de confidentialité</el-button>
-						</div>
-					</el-col>
-				</el-row>
-			</el-footer>
-		</el-container>
+							<div>
+								<el-link href="https://www.europarl.europa.eu/privacy-policy/fr" target="_blank">© European Union, 2020 – Source: European Parliament</el-link>
+							</div>
+							<div>
+								<el-button type="text" icon="el-icon-info" @click="navigate('privacy')">Politique de confidentialité</el-button>
+							</div>
+						</el-col>
+					</el-row>
+				</el-footer>
+			</el-container>
+		</el-row>
 	</div>
 </template>
 
@@ -83,6 +85,16 @@ body {
 	.fade-enter,
 	.fade-leave-to {
 		opacity: 0;
+	}
+}
+
+.app__container {
+	max-width: 60%;
+}
+
+@media screen and (max-width: 1200px) {
+	.app__container {
+		max-width: 100%;
 	}
 }
 
