@@ -1,5 +1,8 @@
 # EUROPARL WEB
 
+![Preview](https://raw.githubusercontent.com/gautiermorel/europarl-web/master/preview.png)
+
+
 ## Project setup
 
 ```
