@@ -7,20 +7,30 @@
 				</div>
 				<!-- <el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button> -->
 			</el-row>
+
+			<div class="app__warning">
+				<div class="app__warning-message">
+					<el-alert title="Avertissement" type="warning">
+            <p>Depuis le 30 novembre 2020, suite à un problème technique du projet Parltrack, la mise à jour des votes n'est plus actualisée.</p>
+            <p>Europarl.eu.org continue quotidiennement de rechercher les mises à jour de votes, toutefois, il se peut que les dernières données disponibles ne soient plus à jour par rapport aux séances plenières passées.</p>
+          </el-alert>
+				</div>
+			</div>
+
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" :current-page="page" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
 			</el-row>
-			<div v-if="!sittings" style="padding: 20px">
-				<sitting-loader v-for="o in 4" :key="o"></sitting-loader>
+			<div v-if="!sittings" class="sittings__loading">
+				<sitting-loader class="sittings__loading-content" v-for="o in 4" :key="o"></sitting-loader>
 			</div>
 			<div v-if="sittings && sittings.length === 0" style="padding: 20px">
 				<el-alert title="Pas de sittings à ce jour" type="info" :closable="false"></el-alert>
 			</div>
 			<div class="sittings__cards" v-if="sittings && sittings.length > 0">
-				<el-card class="box-card" empty-text="Chargement..." v-bind:key="sitting._id" v-for="(sitting) in sittings">
+				<el-card class="box-card" empty-text="Chargement..." v-bind:key="sitting._id" v-for="sitting in sittings">
 					<div slot="header" class="clearfix">
 						<i class="el-icon-date"></i>
-						<span style="padding-left: 20px">Séance plénière du {{sitting.ts | formatDate }} - {{sitting.votes.length}} textes disponibles</span>
+						<span style="padding-left: 20px">Séance plénière du {{ sitting.ts | formatDate }} - {{ sitting.votes.length }} textes disponibles</span>
 						<el-button style="float: right" type="success" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
 					</div>
 					<div class="text item">
@@ -43,15 +53,15 @@
 									<el-row type="flex" justify="space-between">
 										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['+']" type="success">
 											<i class="el-icon-document-checked"></i>
-											{{scope.row.votes && scope.row.votes['+'] && scope.row.votes['+'].total}}
+											{{ scope.row.votes && scope.row.votes["+"] && scope.row.votes["+"].total }}
 										</el-tag>
 										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['0']" type="warning">
 											<i class="el-icon-document-delete"></i>
-											{{scope.row.votes && scope.row.votes['0'] && scope.row.votes['0'].total}}
+											{{ scope.row.votes && scope.row.votes["0"] && scope.row.votes["0"].total }}
 										</el-tag>
 										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['-']" type="danger">
 											<i class="el-icon-document-remove"></i>
-											{{scope.row.votes && scope.row.votes['-'] && scope.row.votes['-'].total}}
+											{{ scope.row.votes && scope.row.votes["-"] && scope.row.votes["-"].total }}
 										</el-tag>
 									</el-row>
 								</template>
@@ -245,8 +255,45 @@ export default {
 	clear: both;
 }
 
+
+.app__warning {
+	display: flex;
+	flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  .app__warning-message {
+    max-width: 50%;
+  }
+}
+
+.sittings__loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+
+	.sittings__loading-content {
+		max-width: 70%;
+	}
+}
+
 .box-card {
 	margin-bottom: 20px;
+	max-width: 80%;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+	.box-card {
+		margin-left: 20px;
+		margin-right: 20px;
+		max-width: 90%;
+		min-width: 90%;
+	}
 }
 
 .sittings__pagination {
@@ -260,8 +307,12 @@ export default {
 	border-bottom: 1px solid #d1d3d4;
 }
 .sittings__cards {
-	padding-left: 20px;
-	padding-right: 20px;
+	// padding-left: 20px;
+	// padding-right: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
 }
 </style>
 

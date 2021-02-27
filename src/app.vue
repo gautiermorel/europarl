@@ -88,10 +88,6 @@ body {
 	}
 }
 
-.app__container {
-	max-width: 60%;
-}
-
 @media screen and (max-width: 1200px) {
 	.app__container {
 		max-width: 100%;
