@@ -5,17 +5,7 @@
 				<div class="sittings__search-bar-container hidden-xs-only">
 					<el-date-picker ref="datePicker" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
 				</div>
-				<!-- <el-button type="primary" icon="el-icon-search" @click="navigate('compare')">Comparer</el-button> -->
 			</el-row>
-
-			<div class="app__warning">
-				<div class="app__warning-message">
-					<el-alert title="Avertissement" type="warning">
-            <p>Depuis le 30 novembre 2020, suite à un problème technique du projet Parltrack, la mise à jour des votes n'est plus actualisée.</p>
-            <p>Europarl.eu.org continue quotidiennement de rechercher les mises à jour de votes, toutefois, il se peut que les dernières données disponibles ne soient plus à jour par rapport aux séances plenières passées.</p>
-          </el-alert>
-				</div>
-			</div>
 
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" :current-page="page" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
@@ -26,49 +16,60 @@
 			<div v-if="sittings && sittings.length === 0" style="padding: 20px">
 				<el-alert title="Pas de sittings à ce jour" type="info" :closable="false"></el-alert>
 			</div>
+
+			<el-row type="flex" align="center" justify="center">
+				<h3>Seances plenières</h3>
+			</el-row>
+
 			<div class="sittings__cards" v-if="sittings && sittings.length > 0">
-				<el-card class="box-card" empty-text="Chargement..." v-bind:key="sitting._id" v-for="sitting in sittings">
-					<div slot="header" class="clearfix">
-						<i class="el-icon-date"></i>
-						<span style="padding-left: 20px">Séance plénière du {{ sitting.ts | formatDate }} - {{ sitting.votes.length }} textes disponibles</span>
-						<el-button style="float: right" type="success" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
+				<div v-bind:key="sitting._id" v-for="sitting in sittings">
+					<div class="sitting__publication-date">
+						{{ sitting.ts | formatDate }}
 					</div>
-					<div class="text item">
-						<!-- <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange"> -->
-						<el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
-							<el-table-column type="selection" width="55"></el-table-column>
-							<el-table-column property="title" label="Texts" min-width="500">
-								<template slot="header">
-									<el-row type="flex" justify="center">Textes</el-row>
-								</template>
-								<template slot-scope="scope">
-									<div v-html="$options.filters.getReferences(scope.row.title)"></div>
-								</template>
-							</el-table-column>
-							<el-table-column width="250">
-								<template slot="header">
-									<el-row type="flex" justify="center">Votes</el-row>
-								</template>
-								<template slot-scope="scope">
-									<el-row type="flex" justify="space-between">
-										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['+']" type="success">
-											<i class="el-icon-document-checked"></i>
-											{{ scope.row.votes && scope.row.votes["+"] && scope.row.votes["+"].total }}
-										</el-tag>
-										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['0']" type="warning">
-											<i class="el-icon-document-delete"></i>
-											{{ scope.row.votes && scope.row.votes["0"] && scope.row.votes["0"].total }}
-										</el-tag>
-										<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['-']" type="danger">
-											<i class="el-icon-document-remove"></i>
-											{{ scope.row.votes && scope.row.votes["-"] && scope.row.votes["-"].total }}
-										</el-tag>
-									</el-row>
-								</template>
-							</el-table-column>
-						</el-table>
-					</div>
-				</el-card>
+
+					<el-card class="box-card" shadow="never" empty-text="Chargement...">
+						<div slot="header" class="clearfix sitting__header">
+							<i class="el-icon-notebook-2"></i>
+							<span style="padding-left: 20px">{{ sitting.votes.length }} textes disponibles</span>
+							<el-button style="float: right" type="info" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
+						</div>
+						<div class="text item">
+							<!-- <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange"> -->
+							<el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
+								<el-table-column type="selection" width="55"></el-table-column>
+								<el-table-column property="title" label="Texts" min-width="500">
+									<template slot="header">
+										<el-row type="flex" justify="center">Textes</el-row>
+									</template>
+									<template slot-scope="scope">
+										<div v-html="$options.filters.getReferences(scope.row.title)"></div>
+									</template>
+								</el-table-column>
+								<el-table-column width="250">
+									<template slot="header">
+										<el-row type="flex" justify="center">Votes</el-row>
+									</template>
+									<template slot-scope="scope">
+										<el-row type="flex" justify="space-between">
+											<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['+']" type="success">
+												<i class="el-icon-document-checked"></i>
+												{{ scope.row.votes && scope.row.votes["+"] && scope.row.votes["+"].total }}
+											</el-tag>
+											<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['0']" type="warning">
+												<i class="el-icon-document-delete"></i>
+												{{ scope.row.votes && scope.row.votes["0"] && scope.row.votes["0"].total }}
+											</el-tag>
+											<el-tag style="min-width: 60px" v-if="scope.row.votes && scope.row.votes['-']" type="danger">
+												<i class="el-icon-document-remove"></i>
+												{{ scope.row.votes && scope.row.votes["-"] && scope.row.votes["-"].total }}
+											</el-tag>
+										</el-row>
+									</template>
+								</el-table-column>
+							</el-table>
+						</div>
+					</el-card>
+				</div>
 			</div>
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" layout="prev, pager, next" :current-page="page" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
@@ -255,18 +256,17 @@ export default {
 	clear: both;
 }
 
-
 .app__warning {
 	display: flex;
 	flex-direction: row;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
 
-  .app__warning-message {
-    max-width: 50%;
-  }
+	.app__warning-message {
+		max-width: 50%;
+	}
 }
 
 .sittings__loading {
@@ -282,9 +282,26 @@ export default {
 
 .box-card {
 	margin-bottom: 20px;
-	max-width: 80%;
 	margin-left: 20px;
 	margin-right: 20px;
+}
+
+.sitting__publication-date {
+	display: block;
+	width: 60px;
+	background-color: #edd227;
+	text-align: center;
+	padding: 10px;
+	margin: 0px 20px 0 0;
+	float: left;
+	font-weight: bold;
+	color: #494634;
+}
+
+.sitting__header {
+	font-size: 18px;
+	color: #198cdc;
+	font-weight: 600;
 }
 
 @media screen and (max-width: 1200px) {
@@ -303,7 +320,7 @@ export default {
 .sittings__search-bar {
 	padding-top: 20px;
 	padding-bottom: 20px;
-	background-color: #fafafa;
+	background-color: #034ea2;
 	border-bottom: 1px solid #d1d3d4;
 }
 .sittings__cards {
@@ -324,5 +341,9 @@ export default {
 
 .no-sitting {
 	border-radius: 50%;
+}
+
+a {
+	color: #198cdc;
 }
 </style>
