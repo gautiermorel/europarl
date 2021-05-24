@@ -16,7 +16,7 @@
 				<el-alert title="Pas de sittings à ce jour" type="info" :closable="false"></el-alert>
 			</div>
 
-			<el-row class="sittings__title" type="flex" align="center" justify="start">
+			<el-row v-if="sittings && sittings.length > 0" class="sittings__title" type="flex" align="center" justify="start">
 				<h1>Liste des séances plenières</h1>
 			</el-row>
 

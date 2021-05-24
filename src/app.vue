@@ -23,7 +23,7 @@
 			<el-container class="app__container">
 				<el-header class="app__header" height="120px">
 					<el-row class="app__header-content" type="flex">
-						<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="fill"></el-image>
+						<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="contain"></el-image>
 						<el-divider direction="vertical"></el-divider>
 						<el-col type="flex" align="center">
 							<div class="app__title" @click="navigate('/')">Europarl</div>
@@ -91,9 +91,9 @@
 }
 
 .el-tag.el-tag--warning {
-	background-color: #FFFFFF !important;
+	background-color: #ffffff !important;
 	border-color: #edd227 !important;
-	color: black !important;
+	color: #edd227 !important;
 }
 
 .el-tag.el-tag--danger {
@@ -116,16 +116,15 @@
 	text-align: center;
 	padding: 10px;
 	margin: 0px 20px 0 0;
-	font-weight: bold;
-	color: #494634;
 	a {
-		color: black;
 		text-decoration: none;
-  }
-  
-  @media screen and (max-width: 1200px) {
-    font-size: 10px;
-  }
+		font-weight: bold;
+		color: #494634;
+	}
+
+	@media screen and (max-width: 1200px) {
+		font-size: 10px;
+	}
 }
 
 @font-face {
@@ -243,6 +242,12 @@ body {
 	}
 }
 
+@media screen and (max-width: 500px) {
+	.app__top-header-text {
+		font-size: 7px;
+	}
+}
+
 #nav {
 	padding: 30px;
 
@@ -312,6 +317,13 @@ body {
 		height: 50px;
 	}
 }
+
+@media screen and (max-width: 1200px) {
+	.app__header-content {
+		width: 100%;
+	}
+}
+
 .app__disclamer {
 	color: #f56c6c;
 	font-size: 10px;
