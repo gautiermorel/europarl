@@ -1,12 +1,11 @@
 <template>
-	<el-row type="flex" justify="center">
-		<el-col type="flex">
-			<el-row class="sittings__search-bar" type="flex" justify="space-around" align="center">
-				<div class="sittings__search-bar-container hidden-xs-only">
-					<el-date-picker ref="datePicker" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
-				</div>
-			</el-row>
-
+	<div class="sittings__main" type="flex" justify="center" align="center">
+		<el-row class="sittings__search-bar" type="flex" justify="space-around" align="center">
+			<div class="sittings__search-bar-container hidden-xs-only">
+				<el-date-picker ref="datePicker" v-model="searchDate" type="date" placeholder="Date d'une séance" :picker-options="pickerOptions" @change="getSittings()"></el-date-picker>
+			</div>
+		</el-row>
+		<el-row class="sittings__container">
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" :current-page="page" layout="prev, pager, next" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
 			</el-row>
@@ -17,12 +16,12 @@
 				<el-alert title="Pas de sittings à ce jour" type="info" :closable="false"></el-alert>
 			</div>
 
-			<el-row type="flex" align="center" justify="center">
-				<h3>Seances plenières</h3>
+			<el-row class="sittings__title" type="flex" align="center" justify="start">
+				<h1>Liste des séances plenières</h1>
 			</el-row>
 
 			<div class="sittings__cards" v-if="sittings && sittings.length > 0">
-				<div v-bind:key="sitting._id" v-for="sitting in sittings">
+				<div style="width: 100%" v-bind:key="sitting._id" v-for="sitting in sittings">
 					<div class="sitting__publication-date">
 						{{ sitting.ts | formatDate }}
 					</div>
@@ -30,7 +29,7 @@
 					<el-card class="box-card" shadow="never" empty-text="Chargement...">
 						<div slot="header" class="clearfix sitting__header">
 							<i class="el-icon-notebook-2"></i>
-							<span style="padding-left: 20px">{{ sitting.votes.length }} textes disponibles</span>
+							<span style="padding-left: 20px">{{ sitting.votes.length }} texte(s) disponible(s)</span>
 							<el-button style="float: right" type="info" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
 						</div>
 						<div class="text item">
@@ -74,8 +73,8 @@
 			<el-row class="sittings__pagination" type="flex" justify="center">
 				<el-pagination :hide-on-single-page="true" layout="prev, pager, next" :current-page="page" :total="total" :page-size="3" @current-change="getNewPage"></el-pagination>
 			</el-row>
-		</el-col>
-	</el-row>
+		</el-row>
+	</div>
 </template>
 
 <i18n>{}</i18n>
@@ -247,6 +246,12 @@ export default {
 	margin-bottom: 18px;
 }
 
+.sittings__main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .clearfix:before,
 .clearfix:after {
 	display: table;
@@ -267,6 +272,15 @@ export default {
 	.app__warning-message {
 		max-width: 50%;
 	}
+}
+
+.sittings__title h1::after {
+	display: block;
+	content: " ";
+	background-color: #edd227;
+	width: 20px;
+	height: 4px;
+  margin-top: 5px;
 }
 
 .sittings__loading {
@@ -322,14 +336,28 @@ export default {
 	padding-bottom: 20px;
 	background-color: #034ea2;
 	border-bottom: 1px solid #d1d3d4;
+	width: 100%;
 }
+
+.sittings__container {
+	width: 60%;
+	padding: 0 20px;
+
+	@media screen and (max-width: 1200px) {
+		width: 100%;
+	}
+}
+
 .sittings__cards {
-	// padding-left: 20px;
-	// padding-right: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
+
+	@media screen and (max-width: 1200px) {
+		display: inline-block;
+		max-width: 100%;
+	}
 }
 </style>
 

@@ -16,25 +16,23 @@
 				</el-dropdown>
 			</el-row>
 			<el-row type="flex">
-				<el-alert :title="displayLastUpdate" type="info" :closable="false"></el-alert>
+				<el-alert :title="displayLastUpdate" type="success" :closable="false"></el-alert>
 			</el-row>
 		</el-row>
 		<el-row type="flex" justify="center" align="center">
 			<el-container class="app__container">
 				<el-header class="app__header" height="120px">
 					<el-row class="app__header-content" type="flex">
-						<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="scale-down"></el-image>
+						<el-image class="app__header-image" @click="navigate('/')" style="width: 100px; height: 50px" src="/img/logo.png" fit="fill"></el-image>
 						<el-divider direction="vertical"></el-divider>
 						<el-col type="flex" align="center">
 							<div class="app__title" @click="navigate('/')">Europarl</div>
 							<div class="hidden-xs-only">Séances plénières européenes</div>
 						</el-col>
 
-						<ul class="social-links">
-							<a href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" class="social-link social-link-linkedin" title="EDPS on Linkedin" target="_blank">
-								<span class="sr-only">Aller sur le site officiel</span>
-							</a>
-						</ul>
+						<div class="app__official">
+							<a href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" class="app__official--link" title="Official website" target="_blank"> Vers le site officiel </a>
+						</div>
 					</el-row>
 				</el-header>
 				<transition name="fade">
@@ -83,6 +81,7 @@
 
 .el-card {
 	border: none !important;
+	overflow: none !important;
 }
 
 .el-tag.el-tag--success {
@@ -92,7 +91,7 @@
 }
 
 .el-tag.el-tag--warning {
-	background-color: #edd227 !important;
+	background-color: #FFFFFF !important;
 	border-color: #edd227 !important;
 	color: black !important;
 }
@@ -103,8 +102,30 @@
 	color: white !important;
 }
 
-.el-button, .el-input__inner, .el-tag {
-  border-radius: 0px !important;
+.el-button,
+.el-input__inner,
+.el-tag {
+	border-radius: 0px !important;
+}
+
+.app__official {
+	background: #edd227;
+	display: inline-block;
+	text-align: center;
+	padding: 10px;
+	text-align: center;
+	padding: 10px;
+	margin: 0px 20px 0 0;
+	font-weight: bold;
+	color: #494634;
+	a {
+		color: black;
+		text-decoration: none;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    font-size: 10px;
+  }
 }
 
 @font-face {
@@ -216,6 +237,10 @@ body {
 	.app__container {
 		max-width: 100%;
 	}
+
+	.app__top-header-text {
+		font-size: 12px;
+	}
 }
 
 #nav {
@@ -281,7 +306,7 @@ body {
 .app__header-content {
 	padding-top: 30px;
 	padding-bottom: 30px;
-	width: 50%;
+	width: 60%;
 
 	.el-divider {
 		height: 50px;
@@ -293,6 +318,7 @@ body {
 }
 .app__header-image {
 	cursor: pointer;
+	width: 100px;
 }
 .app__footer {
 	width: 100%;
@@ -325,10 +351,11 @@ export default {
 	},
 	computed: {
 		displayLastUpdate: function () {
+			if (!this.lastUpdate) return;
 			let lastUpdate = moment(this.lastUpdate)
 				.locale("fr")
-				.format("DD MMMM YYYY HH:mm:ss");
-			return `Dernière mise à jour: ${lastUpdate}`;
+				.format("DD/MM/YY HH:mm:ss");
+			return `MAJ: ${lastUpdate}`;
 		}
 	},
 	watch: {
