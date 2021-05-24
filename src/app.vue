@@ -246,8 +246,6 @@ body {
 	background-color: #eee;
 	padding: 0 0 0 16px;
 	position: relative;
-	line-height: inherit;
-	display: inline-block;
 	height: 28px;
 	line-height: 22px;
 }
