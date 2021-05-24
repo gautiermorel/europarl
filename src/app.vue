@@ -3,7 +3,7 @@
 		<el-row type="flex" justify="space-between" align="center" class="app__top-header">
 			<el-row>
 				<div class="app__top-header-content">
-					<div class="app__top-header-text">Un site web non officiel pour l’Union européenne</div>
+					<div class="app__top-header-text">Projet personnel citoyen - Non officiel EU</div>
 				</div>
 				<el-dropdown class="hidden-xs-only">
 					<span class="el-dropdown-link">
@@ -85,21 +85,28 @@
 }
 
 .el-tag.el-tag--success {
-	background-color: #28a745 !important;
-	border-color: #28a745 !important;
-	color: white !important;
+	background-color: #ffffff !important;
+	border-color: none !important;
+  border: none;
+	color: #28a745 !important;
+  font-size: 14px !important;
 }
 
 .el-tag.el-tag--warning {
 	background-color: #ffffff !important;
-	border-color: #edd227 !important;
-	color: #edd227 !important;
+	border-color: none !important;
+  border: none;
+	color: #ecce0c !important;
+  font-size: 14px !important;
 }
 
 .el-tag.el-tag--danger {
-	background-color: #dc3545 !important;
-	border-color: #dc3545 !important;
-	color: white !important;
+	background-color: #ffffff !important;
+	border-color: none !important;
+  border: none;
+	// border-color: #dc3545 !important;
+	color: #dc3545 !important;
+  font-size: 14px !important;
 }
 
 .el-button,
@@ -286,7 +293,8 @@ body {
 	font-size: 14px;
 	font-family: Arial, Verdana;
 	box-sizing: border-box;
-	color: #212529;
+	color: red;
+  text-transform: uppercase;
 	font-weight: normal;
 	line-height: 16px;
 	padding-right: 30px;

@@ -29,13 +29,13 @@
 					<el-card class="box-card" shadow="never" empty-text="Chargement...">
 						<div slot="header" class="clearfix sitting__header">
 							<i class="el-icon-notebook-2"></i>
-							<span style="padding-left: 20px">{{ sitting.votes.length }} texte(s) disponible(s)</span>
+							<span style="padding-left: 20px">Séance plenière: {{ sitting.votes.length }} texte(s) disponible(s)</span>
 							<el-button style="float: right" type="info" icon="el-icon-download" :loading="isDownloading" @click="download(sitting && sitting._id)">Exporter</el-button>
 						</div>
 						<div class="text item">
 							<!-- <el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe max-height="550" empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange"> -->
 							<el-table :header-row-style="changeHead" :header-cell-style="changeCellHead" ref="multipleTable" :data="sitting.votes" stripe empty-text="Chargement..." style="width: 100%" @selection-change="handleSelectionChange">
-								<el-table-column type="selection" width="55"></el-table-column>
+								<el-table-column type="selection" label="lol" width="55"></el-table-column>
 								<el-table-column property="title" label="Texts" min-width="500">
 									<template slot="header">
 										<el-row type="flex" justify="center">Textes</el-row>
