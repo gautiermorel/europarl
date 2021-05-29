@@ -125,7 +125,6 @@
 	margin: 0px 20px 0 0;
 	a {
 		text-decoration: none;
-		font-weight: bold;
 		color: #494634;
 	}
 
