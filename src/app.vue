@@ -248,12 +248,6 @@ body {
 	}
 }
 
-@media screen and (max-width: 500px) {
-	.app__top-header-text {
-		font-size: 7px;
-	}
-}
-
 #nav {
 	padding: 30px;
 
@@ -341,6 +335,17 @@ body {
 }
 .app__footer {
 	width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+	.app__top-header-text {
+		font-size: 7px;
+	}
+
+  .app__top-header-content {
+    padding-right: 0px;
+  }
+
 }
 </style>
 <script>
