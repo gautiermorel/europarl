@@ -1,27 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Europarl</title>
-</head>
-<body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.0/dist/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      padding: 20px;
+    }
 
-  <h1>Europarl.eu.org</h1>
+    header {
+      background-color: #004080;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1em;
+      text-align: center;
+    }
+
+    h2 {
+      color: #004080;
+      margin-top: 40px;
+    }
+
+    p {
+      font-size: 1em;
+    }
+
+    a {
+      color: #004080;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+
+    input[type="text"]:focus {
+      border-color: #004080;
+      outline: none;
+    }
+
+    button {
+      background-color: #004080;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #003366;
+    }
+
+    #loading {
+      text-align: center;
+      font-weight: bold;
+      color: #004080;
+    }
+
+    #downloadLink {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #downloadLink:hover {
+      background-color: #218838;
+    }
+
+    .href {
+      display: inline-block;
+      margin: 10px 0;
+      padding: 10px 15px;
+      background-color: #0066cc;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .href:hover {
+      background-color: #005bb5;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      max-width: 800px;
+      margin: 10px auto;
+      font-size: 0.9em;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 30px 0;
+    }
+
+    .download-input {
+      display: flex;
+      align-items: center;
+      /* Aligne les éléments sur la même ligne et à la même hauteur */
+      gap: 10px;
+      /* Ajoute un espace entre les éléments */
+    }
+
+    .download-input input[type="text"] {
+      flex: 1;
+      /* Permet à l'input de prendre tout l'espace disponible */
+      padding: 12px 15px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+
+    .download-input button {
+      padding: 12px 20px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-input button:hover {
+      background-color: #003366;
+    }
+
+    .download-input input[type="text"]:focus {
+      border-color: #004080;
+      outline: none;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5em;
+      }
+
+      button,
+      #downloadLink,
+      .href {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>EUROPARL: Roll-call votes | XML to Excel Converter</h1>
 
   <p>Bonjour,</p>
 
-  <p><b>Europarl.eu.org</b> is currently offline.</p>
+  <p><b>Europarl.eu.org</b> is partially offline. A XML to Excel function has been added. (2024-09-27)</p>
 
   <p>Depending on my availability, I might update it with a new version in the future.</p>
 
   <p>I apologize for the inconvenience.</p>
 
-  <p><a target="_blank" href="https://gautiermorel.com/">Please don't hesitate to contact me so I can keep you updated.</a></p>
+
+  <p><a target="_blank" href="https://gautiermorel.com/">Please don't hesitate to contact me so I can keep you
+      updated.</a></p>
 
   <p>Gautier Morel</p>
 
-  <a href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" class="href">Official Plenary Sitting Vote Results</a>
-  
+  <a target="_blank" href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" class="href">Official Plenary
+    Sitting Vote Results</a>
+
+  <hr>
+
+  <h2 for="xmlUrl">Enter XML URL</h2>
+  <pre>(ie: 'https://www.europarl.europa.eu/doceo/document/PV-9-2024-04-23-RCV_EN.xml')</pre>
+  <div class="download-input">
+    <input type="text" id="xmlUrl" placeholder="Enter XML URL">
+    <button id="convertButton">Convert to Excel</button>
+  </div>
+
+  <p id="loading" style="display: none;">Loading... Please wait</p>
+
+  <br><br>
+
+  <a id="downloadLink" style="display:none;">Download Excel File</a>
+
+  <script>
+    // Flattening utility function
+    const arrayFlatten = (arrays) => [].concat.apply([], arrays);
+
+    // Function to process XML data and generate Excel file
+    async function doProcess (data) {
+      const { 'EP.Reference': epReference, 'EP.Number': epNumber, 'Sitting.Identifier': identifier, 'Sitting.Date': date } = data['PV.RollCallVoteResults']['$'];
+      const sitting = `${epReference} (${epNumber}) | ${identifier}: ${date}`;
+      const rollCallVotes = data['PV.RollCallVoteResults']['RollCallVote.Result'];
+
+      const rows = rollCallVotes
+        .reduce((rows, vote) => {
+          const {
+            '$': { 'Identifier': voteIdentifier, 'Date': voteDate },
+            'Result.For': [forResult] = {},
+            'Result.Against': [againstResult] = {},
+            'Result.Abstention': [abstentionResult] = {},
+            'RollCallVote.Description.Text': [voteDescription] = ''
+          } = vote;
+
+          const meps = arrayFlatten([{ ...forResult, voteResult: '+' }, { ...againstResult, voteResult: '-' }, { ...abstentionResult, voteResult: '0' }]
+            .map(({ 'Result.PoliticalGroup.List': politicalGroups = [], voteResult }) => {
+              return arrayFlatten(politicalGroups.map(({ 'PoliticalGroup.Member.Name': politicalGroupMembers, '$': { 'Identifier': mepGroupName } }) => {
+                return arrayFlatten(politicalGroupMembers.map(({ '_': mepName, '$': { 'MepId': mepId, 'PersId': persId } }) => ({
+                  persId,
+                  mepId,
+                  mepGroupName,
+                  mepName,
+                  [voteIdentifier]: voteResult
+                })));
+              }));
+            }));
+
+          const newRows = [];
+
+          for (const mep of meps) {
+            const existing = rows.find(row => row.mepId === mep.mepId);
+            if (existing) existing[voteIdentifier] = mep[voteIdentifier];
+            else newRows.push({ ...mep, [voteIdentifier]: mep[voteIdentifier] });
+          }
+
+          return [...rows, ...newRows].map(({ [voteIdentifier]: data, ...row }) => ({
+            ...row,
+            [`[${voteIdentifier}]${voteDescription} (${voteDate})`]: data
+          }));
+        }, [])
+        .map(({ persId, mepId, mepGroupName, mepName, ...voteResults }) => ({
+          'PERS_ID': persId,
+          'MEP_ID': mepId,
+          'Group': mepGroupName,
+          'Name': mepName,
+          ...voteResults
+        }));
+
+      // Create Excel sheet
+      const worksheet = XLSX.utils.json_to_sheet(rows, { header: ['PERS_ID', 'MEP_ID', 'Group', 'Name'], origin: "A5" });
+      XLSX.utils.sheet_add_aoa(worksheet, [[sitting]], { origin: 'A1' });
+
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
+
+      // Write the Excel file and allow downloading
+      const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const downloadLink = document.getElementById('downloadLink');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'results.xlsx';
+      downloadLink.style.display = 'block';
+      downloadLink.innerText = 'Download Excel File';
+    }
+
+    // Button click event to download the XML, process it, and generate Excel
+    document.getElementById('convertButton').addEventListener('click', async () => {
+      const xmlUrl = document.getElementById('xmlUrl').value;
+
+      // Check if the URL ends with ".xml"
+      if (!xmlUrl.endsWith('.xml')) {
+        alert('Please provide a valid XML URL');
+        return;
+      }
+
+      document.getElementById('loading').style.display = 'block';
+
+      try {
+        // Download the XML file using Axios
+        const response = await axios.get(`https://api.lechatstraat.com/v3/europarl?url=${xmlUrl}`);
+
+        // Process the XML data and generate Excel file
+        await doProcess(response.data);
+      } catch (error) {
+        console.error('Error fetching XML:', error);
+        alert('Error fetching or processing XML file');
+      } finally {
+        // Masquer le loading
+        document.getElementById('loading').style.display = 'none';
+      }
+    });
+  </script>
 </body>
+
 </html>
