@@ -7,228 +7,82 @@
   <title>Europarl</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.0/dist/xlsx.full.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      padding: 20px;
-    }
 
-    header {
-      background-color: #004080;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1em;
-      text-align: center;
-    }
-
-    h2 {
-      color: #004080;
-      margin-top: 40px;
-    }
-
-    p {
-      font-size: 1em;
-    }
-
-    a {
-      color: #004080;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 10px 0;
-      box-sizing: border-box;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      font-size: 1em;
-    }
-
-    input[type="text"]:focus {
-      border-color: #004080;
-      outline: none;
-    }
-
-    button {
-      background-color: #004080;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #003366;
-    }
-
-    #loading {
-      text-align: center;
-      font-weight: bold;
-      color: #004080;
-    }
-
-    #downloadLink {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 15px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    #downloadLink:hover {
-      background-color: #218838;
-    }
-
-    .href {
-      display: inline-block;
-      margin: 10px 0;
-      padding: 10px 15px;
-      background-color: #0066cc;
-      color: white;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .href:hover {
-      background-color: #005bb5;
-    }
-
-    pre {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 4px;
-      overflow-x: auto;
-      max-width: 800px;
-      margin: 10px auto;
-      font-size: 0.9em;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #ccc;
-      margin: 30px 0;
-    }
-
-    .download-input {
-      display: flex;
-      align-items: center;
-      /* Aligne les éléments sur la même ligne et à la même hauteur */
-      gap: 10px;
-      /* Ajoute un espace entre les éléments */
-    }
-
-    .download-input input[type="text"] {
-      flex: 1;
-      /* Permet à l'input de prendre tout l'espace disponible */
-      padding: 12px 15px;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      font-size: 1em;
-    }
-
-    .download-input button {
-      padding: 12px 20px;
-      background-color: #004080;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background-color 0.3s ease;
-    }
-
-    .download-input button:hover {
-      background-color: #003366;
-    }
-
-    .download-input input[type="text"]:focus {
-      border-color: #004080;
-      outline: none;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.5em;
-      }
-
-      button,
-      #downloadLink,
-      .href {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+  <!-- Inclusion de Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <h1>EUROPARL: Roll-call votes | XML to Excel Converter</h1>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-blue-800 text-white py-6 shadow-md">
+    <h1 class="text-center text-2xl md:text-3xl font-semibold">Europarl.eu.org | roll-call votes XML to Excel Converter</h1>
+  </header>
 
-  <p>Bonjour,</p>
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <!-- Introduction Paragraphs -->
+      <div class="space-y-4">
+        <p>Bonjour,</p>
+        <p><strong>Europarl.eu.org</strong> est partiellement hors ligne. Une fonction de conversion XML en Excel a été
+          ajoutée. (2024-09-27)</p>
+        <p>En fonction de ma disponibilité, je pourrais la mettre à jour avec une nouvelle version à l'avenir.</p>
+        <p>Je m'excuse pour le désagrément.</p>
+        <p>
+          <a href="https://gautiermorel.com/" target="_blank" class="text-blue-600 hover:underline font-semibold">
+            N'hésitez pas à me contacter pour que je puisse vous tenir informé.
+          </a>
+        </p>
+        <p>Gautier Morel</p>
+      </div>
 
-  <p><b>Europarl.eu.org</b> is partially offline. A XML to Excel function has been added. (2024-09-27)</p>
+      <!-- Official Vote Results Link -->
+      <div class="mt-6">
+        <a href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" target="_blank"
+          class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+          🇪🇺 Résultats officiels des votes en séance plénière
+        </a>
+      </div>
 
-  <p>Depending on my availability, I might update it with a new version in the future.</p>
+      <hr class="my-6 border-gray-300">
 
-  <p>I apologize for the inconvenience.</p>
+      <!-- XML to Excel Converter -->
+      <div>
+        <h2 class="text-xl text-blue-800 mb-2">Entrez l'URL XML</h2>
+        <pre class="bg-gray-200 p-3 rounded-md overflow-x-auto mb-4 text-sm">
+(ex. : 'https://www.europarl.europa.eu/doceo/document/PV-9-2024-04-23-RCV_EN.xml')
+        </pre>
 
+        <!-- Input and Button Container -->
+        <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+          <input type="text" id="xmlUrl" placeholder="Entrez l'URL XML"
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button id="convertButton"
+            class="w-full md:w-auto bg-blue-800 text-white px-6 py-2 rounded-md hover:bg-blue-900 transition">
+            Convertir en Excel
+          </button>
+        </div>
 
-  <p><a target="_blank" href="https://gautiermorel.com/">Please don't hesitate to contact me so I can keep you
-      updated.</a></p>
+        <!-- Loading Indicator -->
+        <p id="loading" class="mt-4 text-center text-blue-600 font-semibold hidden">Chargement... Veuillez patienter</p>
 
-  <p>Gautier Morel</p>
+        <!-- Download Link -->
+        <div class="mt-6 text-center">
+          <a id="downloadLink"
+            class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition hidden">
+            Télécharger le fichier Excel
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
 
-  <a target="_blank" href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" class="href">Official Plenary
-    Sitting Vote Results</a>
+  <!-- Footer (optional) -->
+  <footer class="bg-blue-800 text-white text-center py-4">
+    &copy; Gautier Morel - Projet personnel citoyen.
+  </footer>
 
-  <hr>
-
-  <h2 for="xmlUrl">Enter XML URL</h2>
-  <pre>(ie: 'https://www.europarl.europa.eu/doceo/document/PV-9-2024-04-23-RCV_EN.xml')</pre>
-  <div class="download-input">
-    <input type="text" id="xmlUrl" placeholder="Enter XML URL">
-    <button id="convertButton">Convert to Excel</button>
-  </div>
-
-  <p id="loading" style="display: none;">Loading... Please wait</p>
-
-  <br><br>
-
-  <a id="downloadLink" style="display:none;">Download Excel File</a>
-
+  <!-- Script -->
   <script>
     // Flattening utility function
     const arrayFlatten = (arrays) => [].concat.apply([], arrays);
@@ -296,34 +150,35 @@
       const downloadLink = document.getElementById('downloadLink');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'results.xlsx';
-      downloadLink.style.display = 'block';
-      downloadLink.innerText = 'Download Excel File';
+      downloadLink.classList.remove('hidden');
+      downloadLink.innerText = 'Télécharger le fichier Excel';
     }
 
     // Button click event to download the XML, process it, and generate Excel
     document.getElementById('convertButton').addEventListener('click', async () => {
-      const xmlUrl = document.getElementById('xmlUrl').value;
+      const xmlUrl = document.getElementById('xmlUrl').value.trim();
 
-      // Check if the URL ends with ".xml"
+      // Vérifier si l'URL se termine par ".xml"
       if (!xmlUrl.endsWith('.xml')) {
-        alert('Please provide a valid XML URL');
+        alert('Veuillez fournir une URL XML valide.');
         return;
       }
 
-      document.getElementById('loading').style.display = 'block';
+      document.getElementById('loading').classList.remove('hidden');
+      document.getElementById('downloadLink').classList.add('hidden');
 
       try {
-        // Download the XML file using Axios
-        const response = await axios.get(`https://api.lechatstraat.com/v3/europarl?url=${xmlUrl}`);
+        // Télécharger le fichier XML en utilisant Axios
+        const response = await axios.get(`https://api.lechatstraat.com/v3/europarl?url=${encodeURIComponent(xmlUrl)}`);
 
-        // Process the XML data and generate Excel file
+        // Traiter les données XML et générer le fichier Excel
         await doProcess(response.data);
       } catch (error) {
-        console.error('Error fetching XML:', error);
-        alert('Error fetching or processing XML file');
+        console.error('Erreur lors de la récupération du XML :', error);
+        alert('Erreur lors de la récupération ou du traitement du fichier XML.');
       } finally {
-        // Masquer le loading
-        document.getElementById('loading').style.display = 'none';
+        // Masquer le chargement
+        document.getElementById('loading').classList.add('hidden');
       }
     });
   </script>
