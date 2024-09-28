@@ -83,7 +83,7 @@
       }
 
       const loadingDownload = document.getElementById('loadingDownload');
-      loadingDownload.classList.remove('hidden');
+      if (loadingDownload) loadingDownload.classList.remove('hidden');
 
       try {
         const response = await axios.get(`https://api.lechatstraat.com/v3/europarl?url=${encodeURIComponent(url)}`);
@@ -92,7 +92,7 @@
         console.error('Erreur lors de la récupération du XML :', error);
         alert('Erreur lors de la récupération ou du traitement du fichier XML.');
       } finally {
-        loadingDownload.classList.add('hidden');
+        if (loadingDownload) loadingDownload.classList.add('hidden');
       }
     }
 
