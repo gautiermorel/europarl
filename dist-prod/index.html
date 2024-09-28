@@ -99,10 +99,10 @@
         .reduce((rows, vote) => {
           const {
             '$': { 'Identifier': voteIdentifier, 'Date': voteDate },
-            'Result.For': [forResult] = {},
-            'Result.Against': [againstResult] = {},
-            'Result.Abstention': [abstentionResult] = {},
-            'RollCallVote.Description.Text': [voteDescription] = ''
+            'Result.For': [forResult = {}] = [],
+            'Result.Against': [againstResult = {}] = [],
+            'Result.Abstention': [abstentionResult = {}] = [],
+            'RollCallVote.Description.Text': [voteDescription = ''] = []
           } = vote;
 
           const meps = arrayFlatten([{ ...forResult, voteResult: '+' }, { ...againstResult, voteResult: '-' }, { ...abstentionResult, voteResult: '0' }]
