@@ -14,22 +14,16 @@
 
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
   <header class="bg-blue-800 text-white py-6 shadow-md">
-    <h1 class="text-center text-2xl md:text-3xl font-semibold">Résultats de votes des séances plénières</h1>
+    <h1 class="text-center text-2xl md:text-3xl font-semibold">EUROPARL.EU.ORG</h1>
   </header>
 
   <main class="flex-grow container mx-auto px-4 py-8">
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <div class="mt-6">
-        <a href="https://www.europarl.europa.eu/plenary/en/votes.html?tab=votes" target="_blank"
-          class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-          🇪🇺 Résultats officiels des votes en séance plénière
-        </a>
-      </div>
+
 
       <div id="xmlLinksContainer" class="mt-6 bg-white p-6 rounded-lg shadow-md hidden">
-        <h2 class="text-xl text-blue-800 mb-2">Derniers liens disponibles</h2>
-
-        <p id="loadingLinks" class="text-center text-blue-600 font-semibold hidden">Chargement des liens XML... Veuillez patienter</p>
+        <p id="loadingLinks" class="text-center text-blue-600 font-semibold hidden">Chargement des liens XML... Veuillez
+          patienter</p>
 
         <div id="linksList" class="space-y-4"></div>
       </div>
@@ -38,10 +32,21 @@
 
       <hr class="my-6 border-gray-300">
 
+      <div class="mt-6">
+        <a href="https://www.europarl.europa.eu/plenary/fr/votes.html?tab=votes" target="_blank"
+          class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+          Vers le site officiel
+        </a>
+      </div>
+
+      <hr class="my-6 border-gray-300">
+
       <div>
         <h2 class="text-xl text-blue-800 mb-2">Entrez l'URL XML du RCV:</h2>
-        <p>Vous ne trouvez pas ce que vous rechercher, vous pouvez convertir directement le lien d'un roll call XML en XLSX comme par exemple;</p>
-        <pre class="bg-gray-200 p-3 rounded-md overflow-x-auto mb-4 text-sm">https://www.europarl.europa.eu/doceo/document/PV-9-2024-04-23-RCV_EN.xml</pre>
+        <p class="text-sm">Vous ne trouvez pas ce que vous rechercher, vous pouvez convertir directement le lien d'un roll call XML en
+          XLSX comme par exemple;</p>
+        <pre
+          class="bg-gray-200 p-3 rounded-md overflow-x-auto mb-4 text-sm">https://www.europarl.europa.eu/doceo/document/PV-9-2024-04-23-RCV_EN.xml</pre>
 
         <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <input type="text" id="xmlUrl" placeholder="Entrez l'URL XML"
@@ -54,7 +59,8 @@
         </div>
 
         <div class="mt-6 text-center">
-          <a id="downloadLink" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition hidden">
+          <a id="downloadLink"
+            class="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition hidden">
             Télécharger le fichier Excel
             <span id="loadingDownload" class="ml-2 hidden spinner-border spinner-border-sm" role="status"></span>
           </a>
@@ -70,7 +76,7 @@
   <script>
     const arrayFlatten = (arrays) => [].concat.apply([], arrays);
 
-    async function handleDownload(url) {
+    async function handleDownload (url) {
       if (!url.endsWith('.xml')) {
         alert('Veuillez fournir une URL XML valide.');
         return;
@@ -90,7 +96,7 @@
       }
     }
 
-    async function doProcess(data) {
+    async function doProcess (data) {
       const { 'EP.Reference': epReference, 'EP.Number': epNumber, 'Sitting.Identifier': identifier, 'Sitting.Date': date } = data['PV.RollCallVoteResults']['$'];
       const sitting = `${epReference} (${epNumber}) | ${identifier}: ${date}`;
       const rollCallVotes = data['PV.RollCallVoteResults']['RollCallVote.Result'];
@@ -162,7 +168,7 @@
       await handleDownload(xmlUrl);
     });
 
-    async function fetchXmlLinks() {
+    async function fetchXmlLinks () {
       const loadingLinks = document.getElementById('loadingLinks');
       loadingLinks.classList.remove('hidden');
 
