@@ -143,7 +143,7 @@
       XLSX.utils.sheet_add_aoa(worksheet, [[sitting]], { origin: 'A1' });
 
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
+      XLSX.utils.book_append_sheet(workbook, worksheet, identifier);
 
       // Write the Excel file and allow downloading
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
@@ -151,7 +151,7 @@
 
       const downloadLink = document.getElementById('downloadLink');
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = 'results.xlsx';
+      downloadLink.download = `${epReference}-${epNumber}-${identifier}-${date}.xlsx`;
       downloadLink.classList.remove('hidden'); // Afficher le lien de téléchargement
       downloadLink.innerText = 'Télécharger le fichier Excel';
       downloadLink.click(); // Simuler le clic pour démarrer le téléchargement
