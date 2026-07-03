@@ -33,56 +33,62 @@
         <div>
           <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm mb-4">
             <span class="w-2 h-2 rounded-full bg-eu-yellow"></span>
-            Roll-call votes converter
+            <span data-i18n="badge">Convertisseur de votes nominaux</span>
           </div>
 
           <h1 class="text-3xl md:text-5xl font-bold tracking-tight">
             Europarl.eu.org
           </h1>
 
-          <p class="mt-3 text-blue-100 max-w-2xl">
-            Téléchargez rapidement les votes nominaux du Parlement européen au format Excel.
+          <p class="mt-3 text-blue-100 max-w-2xl" data-i18n="subtitle">
+            Projet personnel, non affilié aux institutions de l’Union européenne. Téléchargez rapidement les votes nominaux du Parlement européen au format Excel.
           </p>
         </div>
 
-        <a href="https://www.europarl.europa.eu/plenary/fr/votes.html?tab=votes"
-           target="_blank"
-           class="bg-white text-eu-blue font-semibold px-5 py-3 rounded-xl hover:bg-blue-50 transition shadow">
-          Vers le site officiel
-        </a>
+        <div class="flex items-center gap-3">
+          <select id="languageSelector"
+                  class="bg-white text-eu-blue font-semibold px-4 py-3 rounded-xl shadow focus:outline-none">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+          </select>
+
+          <a href="https://www.europarl.europa.eu/plenary/fr/votes.html?tab=votes"
+             target="_blank"
+             class="bg-white text-eu-blue font-semibold px-5 py-3 rounded-xl hover:bg-blue-50 transition shadow"
+             data-i18n="officialSite">
+            Vers le site officiel
+          </a>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-5 py-10 space-y-8">
     <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-      <div class="flex items-start justify-between gap-4 mb-6">
-        <div>
-          <h2 class="text-2xl font-bold text-eu-dark">Derniers fichiers disponibles</h2>
-          <p class="text-slate-500 mt-1">
-            Sélectionnez directement un vote et récupérez-le en .xlsx.
-          </p>
-        </div>
-      </div>
+      <h2 class="text-2xl font-bold text-eu-dark" data-i18n="latestTitle">
+        Derniers fichiers disponibles
+      </h2>
+
+      <p class="text-slate-500 mt-1 mb-6" data-i18n="latestDescription">
+        Sélectionnez directement un vote et récupérez-le en .xlsx.
+      </p>
 
       <div id="xmlLinksContainerLoading" class="flex items-center gap-3 text-eu-blue font-medium">
         <span class="w-5 h-5 border-2 border-eu-blue border-t-transparent rounded-full animate-spin"></span>
-        Chargement des liens XML...
+        <span data-i18n="loadingLinks">Chargement des liens XML...</span>
       </div>
 
       <div id="xmlLinksContainer" class="hidden">
-        <p id="loadingLinks" class="hidden text-eu-blue font-semibold mb-4">
-          Chargement des liens XML...
-        </p>
-
         <div id="linksList" class="space-y-6"></div>
       </div>
     </section>
 
     <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-      <h2 class="text-2xl font-bold text-eu-dark mb-2">Convertir une URL XML</h2>
+      <h2 class="text-2xl font-bold text-eu-dark mb-2" data-i18n="convertTitle">
+        Convertir une URL XML
+      </h2>
 
-      <p class="text-slate-500 mb-4">
+      <p class="text-slate-500 mb-4" data-i18n="convertDescription">
         Vous pouvez aussi coller directement l’URL d’un fichier XML RCV.
       </p>
 
@@ -98,14 +104,15 @@
 
         <button id="convertButton"
                 class="bg-eu-blue text-white font-semibold px-6 py-3 rounded-xl hover:bg-eu-dark transition flex items-center justify-center gap-2">
-          <span>Convertir en Excel</span>
+          <span data-i18n="convertButton">Convertir en Excel</span>
           <span id="loadingConvert" class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
         </button>
       </div>
 
       <div class="mt-6 text-center">
         <a id="downloadLink"
-           class="hidden inline-block bg-green-600 text-white font-semibold px-5 py-3 rounded-xl hover:bg-green-700 transition">
+           class="hidden inline-block bg-green-600 text-white font-semibold px-5 py-3 rounded-xl hover:bg-green-700 transition"
+           data-i18n="downloadExcel">
           Télécharger le fichier Excel
         </a>
       </div>
@@ -117,6 +124,73 @@
   </footer>
 
   <script>
+    const translations = {
+      fr: {
+        badge: 'Convertisseur de votes nominaux',
+        subtitle: 'Projet personnel, non affilié aux institutions de l’Union européenne. Téléchargez rapidement les votes nominaux du Parlement européen au format Excel.',
+        officialSite: 'Vers le site officiel',
+        latestTitle: 'Derniers fichiers disponibles',
+        latestDescription: 'Sélectionnez directement un vote et récupérez-le en .xlsx.',
+        loadingLinks: 'Chargement des liens XML...',
+        convertTitle: 'Convertir une URL XML',
+        convertDescription: 'Vous pouvez aussi coller directement l’URL d’un fichier XML RCV.',
+        convertButton: 'Convertir en Excel',
+        downloadExcel: 'Télécharger le fichier Excel',
+        xmlPlaceholder: 'Collez l’URL XML ici...',
+        downloadButton: 'Télécharger .xlsx',
+        downloading: 'Téléchargement...',
+        invalidUrl: 'Veuillez fournir une URL XML valide.',
+        xmlError: 'Erreur lors de la récupération ou du traitement du fichier XML.',
+        linksError: 'Erreur lors de la récupération des liens XML.',
+        loadingError: 'Erreur lors du chargement des liens XML.',
+        sittingAt: 'à'
+      },
+      en: {
+        badge: 'Roll-call vote converter',
+        subtitle: 'Personal project. Not affiliated with the European Union or any of its institutions. Quickly download European Parliament roll-call votes as Excel files.',
+        officialSite: 'Visit the official website',
+        latestTitle: 'Latest available files',
+        latestDescription: 'Select a vote directly and download it as .xlsx.',
+        loadingLinks: 'Loading XML links...',
+        convertTitle: 'Convert an XML URL',
+        convertDescription: 'You can also paste the URL of an RCV XML file directly.',
+        convertButton: 'Convert to Excel',
+        downloadExcel: 'Download Excel file',
+        xmlPlaceholder: 'Paste the XML URL here...',
+        downloadButton: 'Download .xlsx',
+        downloading: 'Downloading...',
+        invalidUrl: 'Please provide a valid XML URL.',
+        xmlError: 'Error while retrieving or processing the XML file.',
+        linksError: 'Error while retrieving XML links.',
+        loadingError: 'Error while loading XML links.',
+        sittingAt: 'in'
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'fr';
+
+    function t(key) {
+      return translations[currentLang][key] || translations.fr[key] || key;
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = currentLang;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.innerText = t(el.dataset.i18n);
+      });
+
+      document.getElementById('xmlUrl').placeholder = t('xmlPlaceholder');
+      document.getElementById('languageSelector').value = currentLang;
+    }
+
+    document.getElementById('languageSelector').addEventListener('change', (event) => {
+      currentLang = event.target.value;
+      localStorage.setItem('lang', currentLang);
+      applyTranslations();
+      fetchXmlLinks();
+    });
+
     const arrayFlatten = (arrays) => [].concat.apply([], arrays);
 
     function setButtonLoading(isLoading) {
@@ -131,7 +205,7 @@
 
     async function handleDownload(url) {
       if (!url || !url.endsWith('.xml')) {
-        alert('Veuillez fournir une URL XML valide.');
+        alert(t('invalidUrl'));
         return;
       }
 
@@ -144,8 +218,8 @@
 
         await doProcess(response.data);
       } catch (error) {
-        console.error('Erreur lors de la récupération du XML :', error);
-        alert('Erreur lors de la récupération ou du traitement du fichier XML.');
+        console.error('XML error:', error);
+        alert(t('xmlError'));
       } finally {
         setButtonLoading(false);
       }
@@ -232,6 +306,7 @@
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = `${epReference}-${epNumber}-${identifier}-${date}.xlsx`;
       downloadLink.classList.remove('hidden');
+      downloadLink.innerText = t('downloadExcel');
       downloadLink.click();
     }
 
@@ -241,10 +316,9 @@
     });
 
     async function fetchXmlLinks() {
-      const loadingLinks = document.getElementById('loadingLinks');
       const loadingContainer = document.getElementById('xmlLinksContainerLoading');
 
-      loadingLinks.classList.remove('hidden');
+      loadingContainer.classList.remove('hidden');
 
       try {
         const response = await axios.get('https://api.lechatstraat.com/v3/europarl/list');
@@ -259,7 +333,7 @@
 
           const title = document.createElement('h3');
           title.className = 'text-lg font-bold text-eu-dark mb-4';
-          title.innerText = `${sitting} à ${location}`;
+          title.innerText = `${sitting} ${t('sittingAt')} ${location}`;
 
           const list = document.createElement('div');
           list.className = 'space-y-3';
@@ -275,12 +349,12 @@
             link.innerText = title;
 
             const button = document.createElement('button');
-            button.innerText = 'Télécharger .xlsx';
+            button.innerText = t('downloadButton');
             button.className = 'bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-semibold';
 
             const loading = document.createElement('span');
             loading.className = 'hidden text-sm text-eu-blue';
-            loading.innerText = 'Téléchargement...';
+            loading.innerText = t('downloading');
 
             button.onclick = async () => {
               loading.classList.remove('hidden');
@@ -312,14 +386,13 @@
         document.getElementById('xmlLinksContainer').classList.remove('hidden');
         loadingContainer.classList.add('hidden');
       } catch (error) {
-        console.error('Erreur lors de la récupération des liens XML :', error);
-        loadingContainer.innerText = 'Erreur lors du chargement des liens XML.';
-        alert('Erreur lors de la récupération des liens XML.');
-      } finally {
-        loadingLinks.classList.add('hidden');
+        console.error('Links error:', error);
+        loadingContainer.innerText = t('loadingError');
+        alert(t('linksError'));
       }
     }
 
+    applyTranslations();
     window.onload = fetchXmlLinks;
   </script>
 </body>
